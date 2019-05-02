@@ -1,4 +1,4 @@
-import {CommentDto} from "@/data/CommentDto";
+import {CommentDto} from '@/data/CommentDto';
 
 export interface EntryDto {
     authorUsername: string;

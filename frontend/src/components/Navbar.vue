@@ -1,14 +1,15 @@
 <template>
     <div>
         <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-navbar-brand href="#">NavBar</b-navbar-brand>
+            <b-navbar-brand :to="{ path: 'newest' }">Summer</b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
-                    <b-nav-item href="#">Link</b-nav-item>
-                    <b-nav-item href="#" disabled>Disabled</b-nav-item>
+                    <b-nav-item :to="{ path: 'entries/newest' }">Nowe</b-nav-item>
+                    <b-nav-item :to="{ path: 'entries/hot' }">Gorące</b-nav-item>
+                    <b-nav-item :to="{ path: 'entries/top' }">Nejlepsze</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->

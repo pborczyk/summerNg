@@ -9,13 +9,27 @@
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import {EntryDto} from '@/data/EntryDto';
     import Entry from '@/components/Entry.vue';
+    import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
 
     @Component({
-        components: {Entry,}
+        components: {
+            Entry,
+        },
     })
     export default class Entries extends Vue {
-        @Prop() private entries!: EntryDto[];
+        @Prop() private apiAddress!: string;
+        private entriesHolder! : EntryDto[];
+
+        get entries() {
+            return this.entriesHolder;
+        }
+
+        private mounted() {
+            axios.get<EntryDto[]>('http://localhost:9090/entry/' + this.$route.params.mode)
+                .then((response) => this.entriesHolder = response.data);
+        }
     }
+    //http://localhost:9090/entry/newest
 </script>
 
 <style scoped>

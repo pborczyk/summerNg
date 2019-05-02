@@ -1,10 +1,13 @@
-<template>
+
+        el: '#app',
+    })
+    export default cla<template>
     <div>
         <navbar></navbar>
-        <entries v-bind:entries="testData"></entries>
+        <router-view></router-view>
     </div>
 </template>
-
+<router-view></router-view>
 <script lang="ts">
     import HelloWorld from './components/HelloWorld.vue';
     import Vue from 'vue';
@@ -15,8 +18,18 @@
     import Navbar from './components/Navbar.vue';
     import Entries from './components/Entries.vue';
     import {EntryDto} from '@/data/EntryDto';
+    import VueRouter from 'vue-router';
 
     Vue.use(BootstrapVue);
+    Vue.use(VueRouter);
+
+    const routes = [
+        { path: '/entries/:mode', component: Entries },
+    ];
+
+    const router = new VueRouter({
+        routes,
+    });
 
 
     @Component({
@@ -25,22 +38,12 @@
             Navbar,
             HelloWorld,
         },
+        router,
+        el: '#app',
     })
     export default class App extends Vue {
-        private testData: EntryDto[] = [
-            {
-                authorUsername: 'guy',
-                entryContent: 'content',
-                score: 12,
-                comments: []
-            },
-            {
-                authorUsername: 'guy2',
-                entryContent: 'content2',
-                score: 21,
-                comments: []
-            }];
     }
+
 </script>
 
 <style>
