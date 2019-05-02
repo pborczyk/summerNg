@@ -1,7 +1,12 @@
 package dmcs.summer.entry;
 
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.MathExpressions;
+import com.querydsl.core.types.dsl.NumberExpression;
 import dmcs.summer.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.querydsl.QSort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +33,16 @@ public class EntryService {
     }
 
     public List<EntryDto> getNewest() {
-        return entryRepository.findAll().stream().map(Entry::asDto).collect(Collectors.toList());
+        return entryRepository.findByOrderByTimeStampDesc().stream().map(Entry::asDto).collect(Collectors.toList());
     }
 
     public List<EntryDto> getHot() {
-        return null;
+        OrderSpecifier<Integer> divide = QEntry.entry.upvotes.divide(QEntry.entry.timeStamp.castToNum(Long.class)).desc();
+        QSort orders = new QSort(divide);
+        return entryRepository.findAll(orders).stream().map(Entry::asDto).collect(Collectors.toList());
     }
 
     public List<EntryDto> getTop() {
-        return null;
+        return entryRepository.findByOrderByUpvotesDesc().stream().map(Entry::asDto).collect(Collectors.toList());
     }
 }

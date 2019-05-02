@@ -37,7 +37,7 @@ public class Entry implements Serializable {
 
     public EntryDto asDto() {
         EntryDto dto = new EntryDto();
-        dto.setAuthor(getAuthor());
+        dto.setAuthor(getAuthor().getUsername());
         dto.setComments(getComments().stream().map(Comment::asDto).collect(Collectors.toList()));
         dto.setHashTags(getHashTags());
         dto.setId(getId());

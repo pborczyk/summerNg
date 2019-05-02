@@ -7,9 +7,10 @@
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
-                    <b-nav-item :to="{ path: 'entries/newest' }">Nowe</b-nav-item>
-                    <b-nav-item :to="{ path: 'entries/hot' }">Gorące</b-nav-item>
-                    <b-nav-item :to="{ path: 'entries/top' }">Nejlepsze</b-nav-item>
+                    <b-nav-item :to="{ path: '/entries/newest' }">Nowe</b-nav-item>
+                    <b-nav-item :to="{ path: '/entries/hot' }">Gorące</b-nav-item>
+                    <b-nav-item :to="{ path: '/entries/top' }">Nejlepsze</b-nav-item>
+                    <b-nav-item :to="{ path: '/add' }">Dodaj</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->

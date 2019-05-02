@@ -1,8 +1,11 @@
 import {CommentDto} from '@/data/CommentDto';
 
 export interface EntryDto {
-    authorUsername: string;
-    entryContent: string;
-    score: number;
+    id: number;
+    content: string;
+    author: string;
+    hashTags: string[];
+    upvotes: number;
+    timeStamp: Date;
     comments: CommentDto[];
 }

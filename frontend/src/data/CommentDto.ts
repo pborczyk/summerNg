@@ -1,5 +1,7 @@
 export interface CommentDto {
-    authorUsername: string;
-    commentContent: string;
-    score: number;
+    id: number;
+    content: string;
+    author: string;
+    upvotes: number;
+    timeStamp: Date;
 }

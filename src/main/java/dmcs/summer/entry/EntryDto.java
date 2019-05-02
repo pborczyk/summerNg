@@ -11,7 +11,7 @@ import java.util.Set;
 public class EntryDto {
     private long id;
     private String content;
-    private User author;
+    private String author;
     private Set<String> hashTags;
     private int upvotes;
 
