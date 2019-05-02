@@ -1,10 +1,7 @@
 package dmcs.summer.entry;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +30,10 @@ class EntryController {
     @GetMapping("/hot")
     List<EntryDto> getHot(){
         return entryService.getHot();
+    }
+
+    @PutMapping
+    void incrementUpvotes(Long entryId) {
+        entryService.incrementEntry(entryId);
     }
 }

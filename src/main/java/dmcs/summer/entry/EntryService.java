@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,5 +45,11 @@ public class EntryService {
 
     public List<EntryDto> getTop() {
         return entryRepository.findByOrderByUpvotesDesc().stream().map(Entry::asDto).collect(Collectors.toList());
+    }
+
+    public void incrementEntry(Long entryId) {
+        Entry entry = entryRepository.findById(entryId).orElseThrow(EntryDoesNotExistException::new);
+        entry.setUpvotes(entry.getUpvotes() + 1);
+        entryRepository.save(entry);
     }
 }
