@@ -27,11 +27,35 @@
                         <b-dropdown-item href="#">FA</b-dropdown-item>
                     </b-nav-item-dropdown>
 
-                    <b-nav-item-dropdown right>
+                    <b-nav-item-dropdown right v-if="!isUserLoggedIn">
                         <!-- Using 'button-content' slot -->
-                        <template slot="button-content"><em>User</em></template>
-                        <b-dropdown-item href="#">Profile</b-dropdown-item>
-                        <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                        <template slot="button-content"><em>Zaloguj</em></template>
+                        <b-dropdown-form @submit="onLoginSubmit">
+                            <b-form-group label="Login" label-for="dropdown-form-email" @submit.stop.prevent>
+                                <b-form-input
+                                        id="dropdown-form-email"
+                                        size="sm"
+                                        placeholder="Login"
+                                        v-model="form.login"
+                                ></b-form-input>
+                            </b-form-group>
+
+                            <b-form-group label="Password" label-for="dropdown-form-password">
+                                <b-form-input
+                                        id="dropdown-form-password"
+                                        type="password"
+                                        size="sm"
+                                        placeholder="Hasło"
+                                        v-model="form.password"
+                                ></b-form-input>
+                            </b-form-group>
+
+                            <b-form-checkbox class="mb-3">Zapamiętaj</b-form-checkbox>
+                            <b-dropdown-item-button variant="primary" @click="onClick">Zaloguj</b-dropdown-item-button>
+                            <b-dropdown-divider></b-dropdown-divider>
+                            <b-dropdown-item-button>Zarejestruj</b-dropdown-item-button>
+
+                        </b-dropdown-form>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
             </b-collapse>
@@ -40,10 +64,24 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue} from "vue-property-decorator";
+    import {logIn} from '@/security/BasicAuthInterceptor';
 
     @Component
     export default class Navbar extends Vue {
+
+        form: any = {
+            login: "",
+            password: "",
+        };
+
+        get isUserLoggedIn(): boolean {
+            return localStorage.getItem("auth_token") != null;
+        }
+
+        private onLoginSubmit() {
+            logIn(this.form.login, this.form.password);
+        }
     }
 </script>
 
