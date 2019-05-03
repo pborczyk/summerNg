@@ -14,27 +14,23 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from "vue-property-decorator";
-    import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
-    import {CreateEntryRequestDto} from '@/data/CreateEntryRequestDto';
+    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import axios from 'axios';
 
 
     @Component
     export default class NewEntryForm extends Vue {
-        form: any = {
-            content: ""
+        private form: any = {
+            content: '',
         };
 
         private onSubmit() {
-            axios.post<CreateEntryRequestDto[]>('http://localhost:9090/entry/' + this.$route.params.mode)
+            axios.post<number>('http://localhost:9090/entry/', this.form)
                 .then((respone) => console.log('New entry id: ' + respone))
                 .catch((error) => console.log(error));
         }
-
-        private onReset() {
-
-        }
     }
+
 </script>
 
 <style scoped>

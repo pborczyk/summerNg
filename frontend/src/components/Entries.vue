@@ -21,7 +21,7 @@
     })
     export default class Entries extends Vue {
         @Prop() private apiAddress!: string;
-        private entriesHolder! : EntryDto[];
+        private entriesHolder!: EntryDto[];
 
         get entries() {
             return this.entriesHolder;
@@ -33,7 +33,7 @@
                 .catch((error) => console.log(error));
         }
     }
-    //http://localhost:9090/entry/newest
+
 </script>
 
 <style scoped>
