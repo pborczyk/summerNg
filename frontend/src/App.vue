@@ -1,13 +1,29 @@
 <template>
     <div>
         <navbar></navbar>
-        <router-view></router-view>
+        <b-alert
+                :show="dismissCountDown"
+                dismissible
+                variant="warning"
+                @dismissed="dismissCountDown=0"
+                @dismiss-count-down="countDownChanged"
+        >
+            <p>{{ alertMessage }}</p>
+            <b-progress
+                    :variant="alertVariant"
+                    :max="dismissSecs"
+                    :value="dismissCountDown"
+                    height="4px"
+            ></b-progress>
+        </b-alert>
+
+        <router-view @alert-event="alertEvent"></router-view>
     </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
-    import {Component} from 'vue-property-decorator';
+    import {Component, Prop} from 'vue-property-decorator';
 
     import BootstrapVue from 'bootstrap-vue';
     import 'bootstrap/dist/css/bootstrap.css';
@@ -31,6 +47,7 @@
     const routes = [
         { path: '/entries/:mode', component: Entries },
         { path: '/register', component: RegisterForm },
+        { path: '/add', component: NewEntryForm },
     ];
 
     const router = new VueRouter({
@@ -49,8 +66,25 @@
             LoginDropdown,
         },
         router,
+
     })
     export default class App extends Vue {
+
+        alertMessage = '';
+        alertVariant = '';
+        dismissSecs = 10;
+        dismissCountDown = 0;
+
+        private alertEvent(message: string, variant: string) {
+            this.alertMessage = message;
+            this.alertVariant = variant;
+            this.dismissCountDown = this.dismissSecs;
+            console.log('error, handling event');
+        }
+
+        private countDownChanged(dismissCountDown: number) {
+            this.dismissCountDown = dismissCountDown
+        }
     }
 
 </script>

@@ -20,6 +20,6 @@ public class UserController {
 
     @GetMapping
     public UserInfoDto getMe() {
-        return userService.getUserInfo()
+        return null;
     }
 }

@@ -1,9 +1,9 @@
 <template>
     <div>
-        <b-form @submit="onSubmit" @reset="onReset">
+        <b-form @submit="onSubmit">
             <b-textarea
                     id="textarea"
-                    v-model="content"
+                    v-model="form.content"
                     placeholder="Wpisz coś..."
                     rows="3"
                     max-rows="6">
@@ -20,7 +20,7 @@
 
     @Component
     export default class NewEntryForm extends Vue {
-        private form: any = {
+        form: any = {
             content: '',
         };
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-form @submit="onSubmit" @reset="onReset">
+        <b-form @submit="onSubmit">
             <b-form-group
                     id="input-group-1"
                     label="Login"
@@ -48,8 +48,20 @@
 
         private onSubmit() {
             axios.post('http://localhost:9090/user/', this.form)
-                .then((respone) => console.log(respone))
-                .catch((error) => console.log(error));
+                .then((response) => this.onSuccess())
+                .catch((error) => this.onError());
+        }
+
+        private onSuccess() {
+            this.$router.replace({path: '/' },
+                () => {
+                    console.log('error, emitting event');
+                    this.$emit('alert-event', 'Zarejestrowano', '');
+                });
+        }
+
+        private onError() {
+            this.$emit('alert-event', 'Wystąpił błąd', 'danger');
         }
     }
 </script>

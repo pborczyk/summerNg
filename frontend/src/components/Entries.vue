@@ -21,15 +21,14 @@
     })
     export default class Entries extends Vue {
         @Prop() private apiAddress!: string;
-        private entriesHolder!: EntryDto[];
+        private entries: EntryDto[]= [];
 
-        get entries() {
-            return this.entriesHolder;
-        }
 
         private mounted() {
-            axios.get<EntryDto[]>('http://localhost:9090/entry/' + this.$route.params.mode)
-                .then((response) => this.entriesHolder = response.data)
+            const mode = this.$route.params.mode != null ? this.$route.params.mode : 'newest';
+            const url = 'http://localhost:9090/entry/' + mode;
+            axios.get<EntryDto[]>(url)
+                .then((response) => this.entries = response.data)
                 .catch((error) => console.log(error));
         }
     }
