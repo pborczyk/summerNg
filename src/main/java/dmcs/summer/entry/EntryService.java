@@ -4,12 +4,14 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.MathExpressions;
 import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import dmcs.summer.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.querydsl.QSort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,7 +40,11 @@ public class EntryService {
     }
 
     public List<EntryDto> getHot() {
-        OrderSpecifier<Integer> divide = QEntry.entry.upvotes.divide(QEntry.entry.timeStamp.castToNum(Long.class)).desc();
+        PathBuilder<Entry> entryPathBuilder = new PathBuilder<>(Entry.class, "entry");
+        OrderSpecifier<Long> divide = entryPathBuilder.getNumber("upvotes", Long.class)
+                .divide(entryPathBuilder.getTime("timestamp", Date.class)
+                        .castToNum(Long.class))
+                .desc();
         QSort orders = new QSort(divide);
         return entryRepository.findAll(orders).stream().map(Entry::asDto).collect(Collectors.toList());
     }

@@ -14,8 +14,10 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import Vue from 'vue';
+    import {Component} from 'vue-property-decorator';
     import axios from 'axios';
+    import {environment} from '@/env/DevEnv';
 
 
     @Component
@@ -25,7 +27,7 @@
         };
 
         private onSubmit() {
-            axios.post<number>('http://localhost:9090/entry/', this.form)
+            axios.post<number>(environment.apiUrl + 'entry/', this.form)
                 .then((respone) => console.log('New entry id: ' + respone))
                 .catch((error) => console.log(error));
         }

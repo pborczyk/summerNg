@@ -22,9 +22,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .httpBasic()
-                .and().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/user/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/entry/**").permitAll()
+                .and()
+                .antMatcher("/api/**").authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/user/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/entry/**").permitAll()
                 .anyRequest().fullyAuthenticated();
     }
 

@@ -33,9 +33,12 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import Vue from 'vue';
+    import {Component, Prop} from 'vue-property-decorator';
     import {RegisterUserDto} from '@/data/RegisterUserDto';
     import axios from 'axios';
+    import {environment} from "@/env/DevEnv";
+    import {SpringErrorDto} from "@/data/SpringErrorDto";
 
 
     @Component
@@ -47,9 +50,9 @@
         };
 
         private onSubmit() {
-            axios.post('http://localhost:9090/user/', this.form)
+            axios.post(environment.apiUrl + 'user/', this.form)
                 .then((response) => this.onSuccess())
-                .catch((error) => this.onError());
+                .catch((error) => this.onError(error.response.data));
         }
 
         private onSuccess() {
@@ -60,8 +63,9 @@
                 });
         }
 
-        private onError() {
-            this.$emit('alert-event', 'Wystąpił błąd', 'danger');
+        private onError(error: SpringErrorDto) {
+            console.log(error);
+            this.$emit('alert-event', error.message, 'danger');
         }
     }
 </script>

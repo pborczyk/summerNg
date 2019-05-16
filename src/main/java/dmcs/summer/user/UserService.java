@@ -12,6 +12,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
      void createUser(RegisterUserDto registerUserDto) {
+         if (userRepository.existsByUsername(registerUserDto.getUsername())) {
+             throw new UserAlreadyExistsException();
+         }
          User newUser = User.builder()
                  .username(registerUserDto.getUsername())
                  .password(passwordEncoder.encode(registerUserDto.getPassword()))
