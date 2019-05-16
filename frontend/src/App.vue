@@ -25,6 +25,8 @@
 
 <script lang="ts">
     import Vue from "vue";
+    import Vuex from 'vuex';
+
     import {Component, Prop} from "vue-property-decorator";
 
     import BootstrapVue from "bootstrap-vue";
@@ -44,6 +46,7 @@
 
     Vue.use(BootstrapVue);
     Vue.use(VueRouter);
+    Vue.use(Vuex);
 
     const routes = [
         {path: "/", component: Entries},
