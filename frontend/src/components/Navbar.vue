@@ -25,6 +25,7 @@
     import {Component} from 'vue-property-decorator';
     import LoginDropdown from '@/components/LoginDropdown.vue';
     import Vue from 'vue';
+    import {store} from '@/store/store';
 
     @Component({
         components: {
@@ -34,7 +35,7 @@
     export default class Navbar extends Vue {
 
         get isLoginDropdownVisible(): boolean {
-            return this.$store.state.isLoggedIn;
+            return store.state.isLoggedIn;
         }
 
         private form: any = {

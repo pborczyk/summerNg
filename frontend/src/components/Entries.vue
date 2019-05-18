@@ -14,6 +14,7 @@
     import NewEntryForm from '@/components/NewEntryForm.vue';
     import {environment} from '@/env/DevEnv';
     import Vue from 'vue';
+    import {store} from '@/store/store';
 
     @Component({
         components: {
@@ -26,7 +27,7 @@
 
 
         private get isNewEntryFormVisible(): boolean {
-            return this.$store.state.isLoggedIn;
+            return store.state.isLoggedIn;
         }
 
         private mounted() {

@@ -58,22 +58,6 @@
         routes,
     });
 
-
-    const store = new Vuex.Store({
-        state: {
-            isLoggedIn: false,
-        },
-        mutations: {
-            logIn(state) {
-                state.isLoggedIn = true;
-            },
-
-            logOut(state) {
-                state.isLoggedIn = false;
-            },
-        },
-    });
-
     @Component({
         components: {
             Entries,

@@ -3,7 +3,9 @@
     import {UserDto} from '@/security/UserDto';
     import {environment} from '@/env/DevEnv';
     import {Component} from 'vue-property-decorator';
-    import {Vue} from 'vue/types/vue';
+    import Vue from 'vue';
+    import {store} from '@/store/store';
+
     @Component
     export default class NewEntryForm extends Vue {
 
@@ -25,7 +27,7 @@
             });
             console.log('interceptor registered');
             axios.get<UserDto>(environment.apiUrl + 'user/')
-                .then((user) => this.$store.commit('logIn'))
+                .then((user) => store.commit('logIn'))
                 .catch((error) => console.log('could not log in ' + error))
                 .finally();
         }
