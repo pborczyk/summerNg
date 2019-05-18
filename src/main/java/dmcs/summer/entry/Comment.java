@@ -1,17 +1,21 @@
 package dmcs.summer.entry;
 
 import dmcs.summer.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Table(name = "COMMENT_T")
-@Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Entity
 class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

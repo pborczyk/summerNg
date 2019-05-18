@@ -1,19 +1,19 @@
 package dmcs.summer.user;
 
 import dmcs.summer.entry.Entry;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-@Entity
 @Table(name = "USER_T")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Entity
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

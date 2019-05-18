@@ -1,8 +1,10 @@
 package dmcs.summer.entry;
 
 import dmcs.summer.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,10 +13,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Entity
 @Table(name = "ENTRY_T")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Entity
 public class Entry implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

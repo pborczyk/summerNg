@@ -20,5 +20,5 @@ public class UserService {
                  .password(passwordEncoder.encode(registerUserDto.getPassword()))
                  .build();
          userRepository.save(newUser);
-    }
+     }
 }

@@ -35,7 +35,7 @@
     export default class Navbar extends Vue {
 
         get isLoginDropdownVisible(): boolean {
-            return store.state.isLoggedIn;
+            return !store.state.isLoggedIn;
         }
 
         private form: any = {

@@ -16,11 +16,11 @@
         }
 
         protected registerInterceptor() {
-            axios.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
-                const token = sessionStorage.getItem('auth_token');
+            const interceptorId = axios.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
+                const token = sessionStorage.getItem("auth_token");
                 if (token) {
                     config.headers = {
-                        Authorization: 'Bearer ' + token,
+                        Authorization: "Basic " + token,
                     };
                 }
                 return config;
@@ -28,7 +28,10 @@
             console.log('interceptor registered');
             axios.get<UserDto>(environment.apiUrl + 'user/')
                 .then((user) => store.commit('logIn'))
-                .catch((error) => console.log('could not log in ' + error))
+                .catch((error) => {
+                    axios.interceptors.request.eject(interceptorId);
+                    return console.log("could not log in " + error);
+                })
                 .finally();
         }
     }
