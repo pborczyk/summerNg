@@ -17,6 +17,6 @@ public class UserController {
 
     @GetMapping
     public UserInfoDto getMe() {
-        return null;
+        return userService.getCurrentUserInfo();
     }
 }

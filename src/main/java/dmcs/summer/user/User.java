@@ -14,6 +14,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
+@EqualsAndHashCode(exclude = {"entries", "upvotedEntries"})
+@ToString(exclude = {"entries", "upvotedEntries"})
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

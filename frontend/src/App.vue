@@ -1,6 +1,6 @@
 <template>
     <div>
-        <navbar></navbar>
+        <navbar @alert-event="alertEvent"></navbar>
         <b-alert
                 :show="dismissCountDown"
                 dismissible

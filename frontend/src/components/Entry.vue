@@ -11,7 +11,13 @@
                 <p>
                     {{ content }}
                 </p>
-                
+
+                <comment v-for="comment in comments"
+                         v-bind:username="comment.author"
+                         v-bind:content="comment.content">
+                </comment>
+
+                <add-comment-form></add-comment-form>
             </b-media>
         </b-card>
     </div>
@@ -19,12 +25,17 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-
-    @Component
+    import {CommentDto} from '@/data/CommentDto';
+    import Comment from '@/components/Comment.vue';
+    import AddCommentForm from '@/components/AddCommentForm.vue';
+    @Component({
+        components: {AddCommentForm, Comment}
+    })
     export default class Entry extends Vue {
         @Prop() private username!: string;
         @Prop() private content!: string;
         @Prop() private upvotes!: string;
+        @Prop() private comments!: CommentDto[];
     }
 
 </script>

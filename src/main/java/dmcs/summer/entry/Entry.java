@@ -1,10 +1,7 @@
 package dmcs.summer.entry;
 
 import dmcs.summer.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,6 +16,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @Entity
+@EqualsAndHashCode(exclude = {"comments"})
+@ToString(exclude = {"comments"})
 public class Entry implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

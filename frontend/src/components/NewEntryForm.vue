@@ -18,7 +18,7 @@
     import {Component} from 'vue-property-decorator';
     import {api} from '@/Api';
     import {environment} from '@/env/DevEnv';
-    import {CreateEntryRequestDto} from "@/data/CreateEntryRequestDto";
+    import {CreateEntryRequestDto} from '@/data/CreateEntryRequestDto';
     import {store} from '@/store/store';
 
 

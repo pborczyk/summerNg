@@ -22,6 +22,7 @@ public class EntryService {
 
     private final EntryRepository entryRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     long createEntry(CreateEntryRequest request) {
         Entry entry = Entry.builder()
@@ -56,6 +57,19 @@ public class EntryService {
     public void incrementEntry(Long entryId) {
         Entry entry = entryRepository.findById(entryId).orElseThrow(EntryDoesNotExistException::new);
         entry.setUpvotes(entry.getUpvotes() + 1);
+        entryRepository.save(entry);
+    }
+
+    public void postComment(Long entryId, CreateCommentDto createCommentDto) {
+        Entry entry = entryRepository.findById(entryId).get();
+        Comment comment = Comment.builder()
+                .author(userRepository.findByUsername(createCommentDto.getAuthor()).orElseThrow())
+                .content(createCommentDto.getContent())
+                .entry(entryRepository.findById(entryId).orElseThrow())
+                .timeStamp(new Date())
+                .build();
+        entry.getComments().add(comment);
+        commentRepository.save(comment);
         entryRepository.save(entry);
     }
 }

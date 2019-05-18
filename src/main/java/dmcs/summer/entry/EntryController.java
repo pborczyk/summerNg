@@ -6,28 +6,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/entry")
+@RequestMapping("api/")
 @RequiredArgsConstructor
 class EntryController {
 
     private final EntryService entryService;
 
-    @PostMapping
+    @PostMapping("/entry")
     long createEntry(@RequestBody CreateEntryRequest request) {
         return entryService.createEntry(request);
     }
 
-    @GetMapping("/newest")
+    @GetMapping("/entries/newest")
     List<EntryDto> getNewest(){
         return entryService.getNewest();
     }
 
-    @GetMapping("/top")
+    @GetMapping("/entries/top")
     List<EntryDto> getTop(){
         return entryService.getTop();
     }
 
-    @GetMapping("/hot")
+    @GetMapping("/entries/hot")
     List<EntryDto> getHot(){
         return entryService.getHot();
     }
@@ -35,5 +35,10 @@ class EntryController {
     @PutMapping
     void incrementUpvotes(@RequestBody Long entryId) {
         entryService.incrementEntry(entryId);
+    }
+
+    @PostMapping("/entry/{id}/comment/")
+    void postComment(@PathVariable(name = "id") Long entryId, CreateCommentDto createCommentDto) {
+        entryService.postComment(entryId, createCommentDto);
     }
 }

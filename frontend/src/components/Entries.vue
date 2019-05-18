@@ -1,8 +1,11 @@
 <template>
     <div>
         <new-entry-form v-if="isNewEntryFormVisible"></new-entry-form>
-        <entry v-for="entry in entries" v-bind:username="entry.authorUsername"
-               v-bind:content="entry.entryContent" v-bind:upvotes="entry.upvotes"></entry>
+        <entry v-for="entry in entries"
+               v-bind:username="entry.author"
+               v-bind:content="entry.content"
+               v-bind:upvotes="entry.upvotes">
+        </entry>
     </div>
 </template>
 
@@ -32,9 +35,12 @@
 
         private mounted() {
             const mode = this.$route.params.mode != null ? this.$route.params.mode : 'newest';
-            const url = environment.apiUrl + 'entry/' + mode;
+            const url = environment.apiUrl + 'entries/' + mode;
             api.get<EntryDto[]>(url)
-                .then((response) => this.entries = response.data)
+                .then((response) => {
+                    console.log(response.data);
+                    return this.entries = response.data;
+                })
                 .catch((error) => console.log(error));
         }
     }
