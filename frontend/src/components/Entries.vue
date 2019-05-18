@@ -12,9 +12,8 @@
     import Entry from '@/components/Entry.vue';
     import axios from 'axios';
     import NewEntryForm from '@/components/NewEntryForm.vue';
-    import {environment} from "@/env/DevEnv";
+    import {environment} from '@/env/DevEnv';
     import Vue from 'vue';
-    import {isUserLoggedIn} from '@/security/SecurityUtils';
 
     @Component({
         components: {
@@ -23,11 +22,11 @@
         },
     })
     export default class Entries extends Vue {
-        private entries: EntryDto[]= [];
+        private entries: EntryDto[] = [];
 
 
-        private get isNewEntryFormVisible() : boolean {
-            return isUserLoggedIn();
+        private get isNewEntryFormVisible(): boolean {
+            return this.$store.state.isLoggedIn;
         }
 
         private mounted() {

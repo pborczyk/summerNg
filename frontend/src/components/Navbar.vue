@@ -13,7 +13,7 @@
                 </b-navbar-nav>
 
                 <b-navbar-nav class="ml-auto" v-if="isLoginDropdownVisible">
-                   <login-dropdown></login-dropdown>
+                    <login-dropdown></login-dropdown>
                 </b-navbar-nav>
                 <b-nav
             </b-collapse>
@@ -23,10 +23,8 @@
 
 <script lang="ts">
     import {Component} from 'vue-property-decorator';
-    import {logIn} from '@/security/BasicAuthInterceptor';
     import LoginDropdown from '@/components/LoginDropdown.vue';
     import Vue from 'vue';
-    import {isUserLoggedIn} from '@/security/SecurityUtils';
 
     @Component({
         components: {
@@ -35,18 +33,14 @@
     })
     export default class Navbar extends Vue {
 
-        get isLoginDropdownVisible() : boolean {
-            return !isUserLoggedIn();
+        get isLoginDropdownVisible(): boolean {
+            return this.$store.state.isLoggedIn;
         }
 
         private form: any = {
             login: '',
             password: '',
         };
-
-        private onLoginSubmit() {
-            logIn(this.form.login, this.form.password);
-        }
     }
 </script>
 

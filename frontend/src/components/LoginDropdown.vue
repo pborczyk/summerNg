@@ -34,9 +34,11 @@
 <script lang="ts">
     import Vue from 'vue';
     import {Component, Prop} from 'vue-property-decorator';
-    import {logIn} from '@/security/BasicAuthInterceptor';
+    import BasicAuthInterceptor from '@/security/BasicAuthInterceptor.vue';
+    import {mixins} from 'vue-class-component';
+
     @Component
-    export default class LoginDropdown extends Vue {
+    export default class LoginDropdown extends mixins(BasicAuthInterceptor) {
         private form: any = {
             login: '',
             password: '',
@@ -44,7 +46,7 @@
 
         onLoginSubmit() {
             console.log('logging in');
-            logIn(this.form.login, this.form.password);
+            this.logIn(this.form.login, this.form.password);
         }
     }
 

@@ -24,24 +24,24 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import Vue from 'vue';
     import Vuex from 'vuex';
 
-    import {Component, Prop} from "vue-property-decorator";
+    import {Component, Prop} from 'vue-property-decorator';
 
-    import BootstrapVue from "bootstrap-vue";
-    import "bootstrap/dist/css/bootstrap.css";
-    import "bootstrap-vue/dist/bootstrap-vue.css";
+    import BootstrapVue from 'bootstrap-vue';
+    import 'bootstrap/dist/css/bootstrap.css';
+    import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-    import VueRouter from "vue-router";
+    import VueRouter from 'vue-router';
 
-    import NewEntryForm from "./components/NewEntryForm.vue";
-    import RegisterForm from "./components/RegisterForm.vue";
-    import Entry from "./components/Entry.vue";
-    import Comment from "./components/Comment.vue";
-    import Entries from "./components/Entries.vue";
-    import Navbar from "./components/Navbar.vue";
-    import LoginDropdown from "./components/LoginDropdown.vue";
+    import NewEntryForm from './components/NewEntryForm.vue';
+    import RegisterForm from './components/RegisterForm.vue';
+    import Entry from './components/Entry.vue';
+    import Comment from './components/Comment.vue';
+    import Entries from './components/Entries.vue';
+    import Navbar from './components/Navbar.vue';
+    import LoginDropdown from './components/LoginDropdown.vue';
 
 
     Vue.use(BootstrapVue);
@@ -49,15 +49,30 @@
     Vue.use(Vuex);
 
     const routes = [
-        {path: "/", component: Entries},
-        {path: "/entries/:mode", component: Entries},
-        {path: "/register", component: RegisterForm},
+        {path: '/', component: Entries},
+        {path: '/entries/:mode', component: Entries},
+        {path: '/register', component: RegisterForm},
     ];
 
     const router = new VueRouter({
         routes,
     });
 
+
+    const store = new Vuex.Store({
+        state: {
+            isLoggedIn: false,
+        },
+        mutations: {
+            logIn(state) {
+                state.isLoggedIn = true;
+            },
+
+            logOut(state) {
+                state.isLoggedIn = false;
+            },
+        },
+    });
 
     @Component({
         components: {
@@ -74,8 +89,8 @@
     })
     export default class App extends Vue {
 
-        alertMessage = "";
-        alertVariant = "";
+        alertMessage = '';
+        alertVariant = '';
         dismissSecs = 10;
         dismissCountDown = 0;
 

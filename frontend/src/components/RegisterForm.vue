@@ -37,8 +37,8 @@
     import {Component, Prop} from 'vue-property-decorator';
     import {RegisterUserDto} from '@/data/RegisterUserDto';
     import axios from 'axios';
-    import {environment} from "@/env/DevEnv";
-    import {SpringErrorDto} from "@/data/SpringErrorDto";
+    import {environment} from '@/env/DevEnv';
+    import {SpringErrorDto} from '@/data/SpringErrorDto';
 
 
     @Component
