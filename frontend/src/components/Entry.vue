@@ -6,7 +6,7 @@
 
                 <div class="clearfix">
                     <h5 class="mt-0 float-left">{{ username }}</h5>
-                    <div class="float-right">{{ score }}</div>
+                    <div class="float-right">{{ upvotes }}</div>
                 </div>
                 <p>
                     {{ content }}
@@ -24,6 +24,7 @@
     export default class Entry extends Vue {
         @Prop() private username!: string;
         @Prop() private content!: string;
+        @Prop() private upvotes!: string;
     }
 
 </script>

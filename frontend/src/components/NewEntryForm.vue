@@ -16,18 +16,22 @@
 <script lang="ts">
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
-    import axios from 'axios';
+    import {api} from '@/Api';
     import {environment} from '@/env/DevEnv';
+    import {CreateEntryRequestDto} from "@/data/CreateEntryRequestDto";
+    import {store} from '@/store/store';
 
 
     @Component
     export default class NewEntryForm extends Vue {
-        form: any = {
+        form: CreateEntryRequestDto = {
             content: '',
+            author: '',
         };
 
         private onSubmit() {
-            axios.post<number>(environment.apiUrl + 'entry/', this.form)
+            this.form.author = store.state.loggedInUsername;
+            api.post<number>(environment.apiUrl + 'entry/', this.form)
                 .then((respone) => console.log('New entry id: ' + respone))
                 .catch((error) => console.log(error));
         }

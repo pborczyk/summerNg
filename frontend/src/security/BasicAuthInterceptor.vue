@@ -1,10 +1,11 @@
 <script lang="ts">
-    import axios, {AxiosRequestConfig} from 'axios';
+    import {api} from '@/Api'
     import {UserDto} from '@/security/UserDto';
     import {environment} from '@/env/DevEnv';
     import {Component} from 'vue-property-decorator';
     import Vue from 'vue';
     import {store} from '@/store/store';
+    import {AxiosRequestConfig} from 'axios';
 
     @Component
     export default class NewEntryForm extends Vue {
@@ -16,7 +17,7 @@
         }
 
         protected registerInterceptor() {
-            const interceptorId = axios.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
+            const interceptorId = api.interceptors.request.use((config: AxiosRequestConfig): AxiosRequestConfig => {
                 const token = sessionStorage.getItem("auth_token");
                 if (token) {
                     config.headers = {
@@ -26,10 +27,10 @@
                 return config;
             });
             console.log('interceptor registered');
-            axios.get<UserDto>(environment.apiUrl + 'user/')
-                .then((user) => store.commit('logIn'))
+            api.get<UserDto>(environment.apiUrl + 'user/')
+                .then((user) => store.commit('logIn', user.data.username))
                 .catch((error) => {
-                    axios.interceptors.request.eject(interceptorId);
+                    api.interceptors.request.eject(interceptorId);
                     return console.log("could not log in " + error);
                 })
                 .finally();

@@ -6,10 +6,12 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         isLoggedIn: false,
+        loggedInUsername: '',
     },
     mutations: {
-        logIn(state) {
+        logIn(state, username) {
             state.isLoggedIn = true;
+            state.loggedInUsername = username;
         },
 
         logOut(state) {

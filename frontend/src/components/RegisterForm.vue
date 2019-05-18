@@ -36,7 +36,7 @@
     import Vue from 'vue';
     import {Component, Prop} from 'vue-property-decorator';
     import {RegisterUserDto} from '@/data/RegisterUserDto';
-    import axios from 'axios';
+    import {api} from '@/Api';
     import {environment} from '@/env/DevEnv';
     import {SpringErrorDto} from '@/data/SpringErrorDto';
 
@@ -50,7 +50,7 @@
         };
 
         private onSubmit() {
-            axios.post(environment.apiUrl + 'user/', this.form)
+            api.post(environment.apiUrl + 'user/', this.form)
                 .then((response) => this.onSuccess())
                 .catch((error) => this.onError(error.response.data));
         }

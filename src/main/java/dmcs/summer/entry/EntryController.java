@@ -13,7 +13,7 @@ class EntryController {
     private final EntryService entryService;
 
     @PostMapping
-    long createEntry(CreateEntryRequest request) {
+    long createEntry(@RequestBody CreateEntryRequest request) {
         return entryService.createEntry(request);
     }
 
@@ -33,7 +33,7 @@ class EntryController {
     }
 
     @PutMapping
-    void incrementUpvotes(Long entryId) {
+    void incrementUpvotes(@RequestBody Long entryId) {
         entryService.incrementEntry(entryId);
     }
 }
