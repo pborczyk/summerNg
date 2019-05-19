@@ -27,7 +27,7 @@
 <script lang="ts">
     import Vue from 'vue';
     import {Component, Prop} from 'vue-property-decorator';
-    import {api} from '@/Api';
+    import {api} from '@/api/Api';
     import {CreateCommentDto} from '@/data/CreateCommentDto';
     import {store} from '@/store/store';
     import {minLength, required} from 'vuelidate/lib/validators';

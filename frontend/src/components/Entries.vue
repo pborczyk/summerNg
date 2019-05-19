@@ -13,7 +13,7 @@
     import {Component} from 'vue-property-decorator';
     import {EntryDto} from '@/data/EntryDto';
     import Entry from '@/components/Entry.vue';
-    import {api} from '@/Api';
+    import {api} from '@/api/Api';
     import NewEntryForm from '@/components/NewEntryForm.vue';
     import {environment} from '@/env/DevEnv';
     import Vue from 'vue';

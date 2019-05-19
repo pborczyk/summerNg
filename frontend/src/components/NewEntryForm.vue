@@ -26,7 +26,7 @@
 <script lang="ts">
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
-    import {api} from '@/Api';
+    import {api} from '@/api/Api';
     import {environment} from '@/env/DevEnv';
     import {CreateEntryRequestDto} from '@/data/CreateEntryRequestDto';
     import {store} from '@/store/store';

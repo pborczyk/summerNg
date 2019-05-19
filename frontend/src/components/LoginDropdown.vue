@@ -34,7 +34,7 @@
 <script lang="ts">
     import Vue from 'vue';
     import {Component, Prop} from 'vue-property-decorator';
-    import BasicAuthInterceptor from '@/security/BasicAuthInterceptor.vue';
+    import BasicAuthInterceptor from '@/api/BasicAuthInterceptor.vue';
     import {mixins} from 'vue-class-component';
 
     @Component

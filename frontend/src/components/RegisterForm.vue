@@ -67,7 +67,7 @@
     import Vue from 'vue';
     import {Component, Prop} from 'vue-property-decorator';
     import {RegisterUserDto} from '@/data/RegisterUserDto';
-    import {api} from '@/Api';
+    import {api} from '@/api/Api';
     import {environment} from '@/env/DevEnv';
     import {SpringErrorDto} from '@/data/SpringErrorDto';
     import {mixins} from 'vue-class-component';

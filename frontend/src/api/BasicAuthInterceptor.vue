@@ -1,6 +1,6 @@
 <script lang="ts">
-    import {api} from '@/Api';
-    import {UserDto} from '@/security/UserDto';
+    import {api} from '@/api/Api';
+    import {UserDto} from '@/data/UserDto';
     import {environment} from '@/env/DevEnv';
     import {Component} from 'vue-property-decorator';
     import Vue from 'vue';
