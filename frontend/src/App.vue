@@ -42,6 +42,7 @@
     import Entries from './components/Entries.vue';
     import Navbar from './components/Navbar.vue';
     import LoginDropdown from './components/LoginDropdown.vue';
+    import AddCommentForm from './components/AddCommentForm.vue';
     import Vuelidate from 'vuelidate';
 
     Vue.use(BootstrapVue);
@@ -69,6 +70,7 @@
             Entry,
             Comment,
             LoginDropdown,
+            AddCommentForm,
         },
         router,
 

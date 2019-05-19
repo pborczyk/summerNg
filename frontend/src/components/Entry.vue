@@ -17,7 +17,7 @@
                          v-bind:content="comment.content">
                 </comment>
 
-                <add-comment-form></add-comment-form>
+                <add-comment-form v-if="isNewCommentFormVisible"></add-comment-form>
             </b-media>
         </b-card>
     </div>
@@ -28,6 +28,7 @@
     import {CommentDto} from '@/data/CommentDto';
     import Comment from '@/components/Comment.vue';
     import AddCommentForm from '@/components/AddCommentForm.vue';
+    import {store} from '@/store/store';
     @Component({
         components: {AddCommentForm, Comment}
     })
@@ -36,6 +37,10 @@
         @Prop() private content!: string;
         @Prop() private upvotes!: string;
         @Prop() private comments!: CommentDto[];
+
+        private get isNewCommentFormVisible(): boolean {
+            return store.state.isLoggedIn;
+        }
     }
 
 </script>
