@@ -42,11 +42,13 @@
     import Entries from './components/Entries.vue';
     import Navbar from './components/Navbar.vue';
     import LoginDropdown from './components/LoginDropdown.vue';
-
+    import Vuelidate from 'vuelidate';
 
     Vue.use(BootstrapVue);
     Vue.use(VueRouter);
     Vue.use(Vuex);
+    Vue.use(Vuelidate);
+
 
     const routes = [
         {path: '/', component: Entries},
