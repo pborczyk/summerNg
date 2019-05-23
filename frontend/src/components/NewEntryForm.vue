@@ -11,14 +11,13 @@
                         @blur="onTextAreaBlur"
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
-                        @input="$v.form.content.$touch()"
-                        :state="$v.form.content.$dirty ? !$v.form.content.$error : null">
+                        @input="onContentInput">
                 </b-textarea>
                 <b-form-invalid-feedback id="entry-feedback">
                     Wpis nie może zostać pusty.
                 </b-form-invalid-feedback>
             </b-form-group>
-            <b-button variant="primary" type="submit" v-bind:disabled="$v.form.$invalid">Dodaj</b-button>
+            <b-button variant="primary" type="submit">Dodaj</b-button>
         </b-form>
     </div>
 </template>
@@ -30,20 +29,9 @@
     import {environment} from '@/env/DevEnv';
     import {CreateEntryRequestDto} from '@/data/CreateEntryRequestDto';
     import {store} from '@/store/store';
-    import {required} from 'vuelidate/lib/validators';
-    import {mixins} from 'vue-class-component';
-    import {validationMixin} from "vuelidate";
 
-    @Component({
-        validations: {
-            form: {
-                content: {
-                    required,
-                }
-            }
-        }
-    })
-    export default class NewEntryForm extends mixins(validationMixin) {
+    @Component
+    export default class NewEntryForm extends Vue {
         form: CreateEntryRequestDto = {
             content: '',
             author: '',

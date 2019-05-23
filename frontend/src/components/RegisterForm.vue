@@ -10,9 +10,7 @@
                         id="login-input"
                         v-model="form.username"
                         required
-                        placeholder="Wpisz login"
-                        @input="$v.form.username.$touch()"
-                        :state="$v.form.username.$dirty ? !$v.form.username.$error : null">
+                        placeholder="Wpisz login">
                 </b-form-input>
 
                 <b-form-invalid-feedback id="login-feedback">
@@ -29,10 +27,7 @@
                         v-model="form.password"
                         required
                         type="password"
-                        placeholder="Wpisz hasło"
-                        @input="$v.form.password.$touch()"
-                        :state="$v.form.password.$dirty ? !$v.form.password.$error : null"
-                ></b-form-input>
+                        placeholder="Wpisz hasło"></b-form-input>
 
                 <b-form-invalid-feedback id="password-feedback">
                     Hasło jest wymagane oraz musi mieć 6-25 znaków.
@@ -48,17 +43,15 @@
                         v-model="form.repeatPassword"
                         required
                         type="password"
-                        placeholder="Powtórz hasło"
-                        @input="$v.form.repeatPassword.$touch()"
-                        :state="$v.form.repeatPassword.$dirty ? !$v.form.repeatPassword.$error : null"
-                ></b-form-input>
+                        placeholder="Powtórz hasło">
+                </b-form-input>
 
                 <b-form-invalid-feedback id="repeat-password-feedback">
                     Hasła muszą być zgodne.
                 </b-form-invalid-feedback>
             </b-form-group>
 
-            <b-button type="submit" variant="primary" :disabled="$v.form.$invalid">Zarejestruj</b-button>
+            <b-button type="submit" variant="primary">Zarejestruj</b-button>
         </b-form>
     </div>
 </template>
@@ -70,34 +63,10 @@
     import {api} from '@/api/Api';
     import {environment} from '@/env/DevEnv';
     import {SpringErrorDto} from '@/data/SpringErrorDto';
-    import {mixins} from 'vue-class-component';
-    import { validationMixin } from 'vuelidate';
-    import {required, minLength, sameAs, maxLength} from "vuelidate/lib/validators";
 
 
-    @Component(
-        {
-            validations: {
-                form: {
-                    username: {
-                        required,
-                        minLength: minLength(4),
-                        maxLength: maxLength(25),
-                    },
-                    password: {
-                        required,
-                        minLength: minLength(6),
-                        maxLength: maxLength(25),
-                    },
-                    repeatPassword: {
-                        required,
-                        sameAs: sameAs('password'),
-                    },
-                },
-            },
-        },
-    )
-    export default class Register extends mixins(validationMixin) {
+    @Component
+    export default class Register extends Vue {
 
         form = {
             username: '',
