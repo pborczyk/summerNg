@@ -76,10 +76,12 @@
     import {api} from '@/api/Api';
     import {environment} from '@/env/DevEnv';
     import {SpringErrorDto} from '@/data/SpringErrorDto';
+    import {mixins} from 'vue-class-component';
+    import ValidationMixin from '@/components/util/ValidationMixin.vue';
 
 
     @Component
-    export default class Register extends Vue {
+    export default class Register extends mixins(ValidationMixin) {
 
         form = {
             username: '',
@@ -104,15 +106,6 @@
         private onError(error: SpringErrorDto) {
             console.log(error);
             this.$emit('alert-event', error.message, 'danger');
-        }
-
-        validateState(ref: string) {
-            let field = this.$validator.fields.find({name: ref});
-            if (field && (field.flags.dirty || field.flags.validated)) {
-                let b = !this.$validator.errors.has(ref);
-                return b
-            }
-            return null;
         }
     }
 </script>
