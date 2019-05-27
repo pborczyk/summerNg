@@ -43,6 +43,9 @@
     import Navbar from './components/Navbar.vue';
     import LoginDropdown from './components/LoginDropdown.vue';
     import AddCommentForm from './components/AddCommentForm.vue';
+    import VeeValidate from 'vee-validate';
+
+    Vue.use(VeeValidate);
     Vue.use(BootstrapVue);
     Vue.use(VueRouter);
     Vue.use(Vuex);
