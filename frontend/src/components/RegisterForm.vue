@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-form @submit="onSubmit" novalidate="true">
+        <b-form @submit="onSubmit">
             <b-form-group
                     id="input-group-1"
                     label="Login"
@@ -10,7 +10,11 @@
                         id="login-input"
                         v-model="form.username"
                         required
-                        placeholder="Wpisz login">
+                        placeholder="Wpisz login"
+                        name="login"
+                        :state="validateState('orm.username')"
+                        aria-describedby="login-feedback"
+                        v-validate="{ required: true, alpha: true, min: 6, max:30 }">
                 </b-form-input>
 
                 <b-form-invalid-feedback id="login-feedback">
@@ -27,7 +31,12 @@
                         v-model="form.password"
                         required
                         type="password"
-                        placeholder="Wpisz hasło"></b-form-input>
+                        placeholder="Wpisz hasło"
+                        name="password"
+                        :state="validateState('form.password')"
+                        aria-describedby="password-feedback"
+                        v-validate="{ required: true, alpha: true, min: 6, max:30 }">
+                </b-form-input>
 
                 <b-form-invalid-feedback id="password-feedback">
                     Hasło jest wymagane oraz musi mieć 6-25 znaków.
@@ -43,7 +52,11 @@
                         v-model="form.repeatPassword"
                         required
                         type="password"
-                        placeholder="Powtórz hasło">
+                        placeholder="Powtórz hasło"
+                        name="passwordRepeat"
+                        :state="validateState('form.repeatPassword')"
+                        aria-describedby="repeat-password-feedback"
+                        v-validate="{ is: form.password }">
                 </b-form-input>
 
                 <b-form-invalid-feedback id="repeat-password-feedback">
@@ -51,7 +64,7 @@
                 </b-form-invalid-feedback>
             </b-form-group>
 
-            <b-button type="submit" variant="primary">Zarejestruj</b-button>
+            <b-button type="submit" variant="primary" :disabled="errors.any()">Zarejestruj</b-button>
         </b-form>
     </div>
 </template>
@@ -91,6 +104,14 @@
         private onError(error: SpringErrorDto) {
             console.log(error);
             this.$emit('alert-event', error.message, 'danger');
+        }
+
+        validateState(ref: string) {
+            let field = this.$validator.fields.find({name: ref});
+            if (field && (field.flags.dirty || field.flags.validated)) {
+                return !this.$validator.errors.has(ref)
+            }
+            return null;
         }
     }
 </script>
