@@ -11,8 +11,8 @@
                         v-model="form.username"
                         required
                         placeholder="Wpisz login"
-                        name="form.username"
-                        :state="validateState('form.username')"
+                        name="username"
+                        :state="validateState('username')"
                         aria-describedby="login-feedback"
                         v-validate="{ required: true, alpha: true, min: 6, max:30 }">
                 </b-form-input>
@@ -32,8 +32,8 @@
                         required
                         type="password"
                         placeholder="Wpisz hasło"
-                        name="form.password"
-                        :state="validateState('form.password')"
+                        name="password"
+                        :state="validateState('password')"
                         aria-describedby="password-feedback"
                         v-validate="{ required: true, alpha: true, min: 6, max:30 }">
                 </b-form-input>
@@ -53,8 +53,8 @@
                         required
                         type="password"
                         placeholder="Powtórz hasło"
-                        name="form.repeatPassword"
-                        :state="validateState('form.repeatPassword')"
+                        name="repeatPassword"
+                        :state="validateState('repeatPassword')"
                         aria-describedby="repeat-password-feedback"
                         v-validate="{ is: form.password }">
                 </b-form-input>
