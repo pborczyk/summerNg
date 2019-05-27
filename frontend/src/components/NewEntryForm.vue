@@ -11,7 +11,11 @@
                         @blur="onTextAreaBlur"
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
-                        @input="onContentInput">
+                        @input="onContentInput"
+                        name="entry"
+                        :state="validateState('entry')"
+                        aria-describedby="entry-feedback"
+                        v-validate="{ required: true, alpha: true, min: 2 }">
                 </b-textarea>
                 <b-form-invalid-feedback id="entry-feedback">
                     Wpis nie może zostać pusty.
@@ -29,9 +33,11 @@
     import {environment} from '@/env/DevEnv';
     import {CreateEntryRequestDto} from '@/data/CreateEntryRequestDto';
     import {store} from '@/store/store';
+    import {mixins} from 'vue-class-component';
+    import ValidationMixin from '@/components/util/ValidationMixin.vue';
 
     @Component
-    export default class NewEntryForm extends Vue {
+    export default class NewEntryForm extends mixins(ValidationMixin) {
         form: CreateEntryRequestDto = {
             content: '',
             author: '',

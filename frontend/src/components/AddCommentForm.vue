@@ -12,8 +12,12 @@
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
                         class="text-area"
-                ></b-form-textarea>
-                <b-form-invalid-feedback id="entry-feedback">
+                        name="comment"
+                        :state="validateState('comment')"
+                        aria-describedby="comment-feedback"
+                        v-validate="{ required: true, alpha: true, min: 2 }">
+                </b-form-textarea>
+                <b-form-invalid-feedback id="comment-feedback">
                     Komentarz nie może zostać pusty.
                 </b-form-invalid-feedback>
                 <b-button type="submit" variant="primary" class="submit-button">Wyślij</b-button>
@@ -28,9 +32,11 @@
     import {api} from '@/api/Api';
     import {CreateCommentDto} from '@/data/CreateCommentDto';
     import {store} from '@/store/store';
+    import {mixins} from 'vue-class-component';
+    import ValidationMixin from '@/components/util/ValidationMixin.vue';
 
     @Component
-    export default class AddCommentForm extends Vue{
+    export default class AddCommentForm extends mixins(ValidationMixin){
         @Prop() private username!: string;
         @Prop() private entryId!: number;
         content = '';
