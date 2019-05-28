@@ -83,7 +83,7 @@
     @Component
     export default class Register extends mixins(ValidationMixin) {
 
-        form = {
+        public form = {
             username: '',
             password: '',
             repeatPassword: '',

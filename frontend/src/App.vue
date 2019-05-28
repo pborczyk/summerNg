@@ -78,10 +78,10 @@
     })
     export default class App extends Vue {
 
-        alertMessage = '';
-        alertVariant = '';
-        dismissSecs = 10;
-        dismissCountDown = 0;
+        public alertMessage = '';
+        public alertVariant = '';
+        public dismissSecs = 10;
+        public dismissCountDown = 0;
 
         private alertEvent(message: string, variant: string) {
             this.alertMessage = message;

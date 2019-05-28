@@ -36,28 +36,29 @@
     import ValidationMixin from '@/components/util/ValidationMixin.vue';
 
     @Component
-    export default class AddCommentForm extends mixins(ValidationMixin){
+    export default class AddCommentForm extends mixins(ValidationMixin) {
+        public content = '';
+
         @Prop() private username!: string;
         @Prop() private entryId!: number;
-        content = '';
 
         private textAreaRows: number = 2;
 
-        onTextAreaBlur() {
+        public onTextAreaBlur() {
             this.textAreaRows = 2;
         }
 
-        onTextAreaFocus() {
+        public onTextAreaFocus() {
             this.textAreaRows = 5;
         }
 
-        onSubmit() {
+        public onSubmit() {
             const request: CreateCommentDto = {
                 entryId: this.entryId,
                 author: store.state.loggedInUsername,
                 content: this.content,
             };
-            //api.post(en , request);
+            // api.post(en , request);
         }
     }
 </script>

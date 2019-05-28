@@ -30,7 +30,7 @@
     import AddCommentForm from '@/components/AddCommentForm.vue';
     import {store} from '@/store/store';
     @Component({
-        components: {AddCommentForm, Comment}
+        components: {AddCommentForm, Comment},
     })
     export default class Entry extends Vue {
         @Prop() private username!: string;

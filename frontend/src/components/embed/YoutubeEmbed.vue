@@ -9,7 +9,7 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import {environment} from "@/env/DevEnv";
+    import {environment} from '@/env/DevEnv';
     @Component
     export default class YoutubeEmbed extends Vue {
         @Prop() private videoId!: string;

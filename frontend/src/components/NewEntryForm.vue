@@ -38,23 +38,23 @@
 
     @Component
     export default class NewEntryForm extends mixins(ValidationMixin) {
-        form: CreateEntryRequestDto = {
+        public form: CreateEntryRequestDto = {
             content: '',
             author: '',
         };
 
         private textAreaRows: number = 2;
 
-        onTextAreaBlur() {
+        public onTextAreaBlur() {
             this.textAreaRows = 2;
         }
 
-        onTextAreaFocus() {
+        public onTextAreaFocus() {
             this.textAreaRows = 6;
         }
 
 
-        private onSubmit() {
+        public onSubmit() {
             this.form.author = store.state.loggedInUsername;
             api.post<number>(environment.apiUrl + 'entry/', this.form)
                 .then((respone) => console.log('New entry id: ' + respone))

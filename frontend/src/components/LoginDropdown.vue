@@ -44,7 +44,7 @@
             password: '',
         };
 
-        onLoginSubmit() {
+        public onLoginSubmit() {
             console.log('logging in');
             this.logIn(this.form.login, this.form.password);
         }

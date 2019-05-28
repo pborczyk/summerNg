@@ -4,8 +4,8 @@
 
 <script>
     export default {
-        name: "GoogleMapsEmbed"
-    }
+        name: 'GoogleMapsEmbed',
+    };
 </script>
 
 <style scoped>
