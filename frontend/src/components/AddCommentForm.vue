@@ -12,7 +12,7 @@
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
                         class="text-area"
-                        name="comment"
+                        data-vv-name="comment"
                         :state="validateState('comment')"
                         aria-describedby="comment-feedback"
                         v-validate="{ required: true, alpha: true, min: 2 }">

@@ -12,7 +12,7 @@
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
                         @input="onContentInput"
-                        name="entry"
+                        data-vv-name="entry"
                         :state="validateState('entry')"
                         aria-describedby="entry-feedback"
                         v-validate="{ required: true, alpha: true, min: 2 }">

@@ -11,7 +11,7 @@
                         v-model="form.username"
                         required
                         placeholder="Wpisz login"
-                        name="username"
+                        data-vv-name="username"
                         :state="validateState('username')"
                         aria-describedby="login-feedback"
                         v-validate="{ required: true, alpha: true, min: 6, max:30 }">
@@ -32,7 +32,7 @@
                         required
                         type="password"
                         placeholder="Wpisz hasło"
-                        name="password"
+                        data-vv-name="password"
                         :state="validateState('password')"
                         aria-describedby="password-feedback"
                         v-validate="{ required: true, alpha: true, min: 6, max:30 }">
@@ -53,7 +53,7 @@
                         required
                         type="password"
                         placeholder="Powtórz hasło"
-                        name="repeatPassword"
+                        data-vv-name="repeatPassword"
                         :state="validateState('repeatPassword')"
                         aria-describedby="repeat-password-feedback"
                         v-validate="{ is: form.password }">
@@ -90,7 +90,10 @@
         };
 
         private onSubmit() {
-            api.post(environment.apiUrl + 'user/', this.form)
+            api.post(environment.apiUrl + 'user/', {
+                username: this.form.username,
+                password: this.form.password,
+            })
                 .then((response) => this.onSuccess())
                 .catch((error) => this.onError(error.response.data));
         }
