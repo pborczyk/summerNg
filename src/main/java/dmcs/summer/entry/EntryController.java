@@ -46,4 +46,9 @@ class EntryController {
     List<CommentDto> getEntriesComments(Long entryId) {
         return entryService.getEntriesComments(entryId);
     }
+
+    @GetMapping("/entry")
+    EntryDto getById(Long entryId) {
+        return entryService.getById(entryId);
+    }
 }

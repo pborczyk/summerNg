@@ -35,6 +35,8 @@
     import {store} from '@/store/store';
     import {mixins} from 'vue-class-component';
     import ValidationMixin from '@/components/util/ValidationMixin.vue';
+    import {EntryDto} from "@/data/EntryDto";
+    import {AxiosPromise} from 'axios';
 
     @Component
     export default class NewEntryForm extends mixins(ValidationMixin) {
@@ -57,8 +59,17 @@
         public onSubmit() {
             this.form.author = store.state.loggedInUsername;
             api.post<number>(environment.apiUrl + 'entry/', this.form)
-                .then((respone) => console.log('New entry id: ' + respone))
+                .then((respone) => {
+                    console.log('New entry id: ' + respone.data);
+                    this.onSuccess(respone.data);
+                })
                 .catch((error) => console.log(error));
+        }
+
+        private onSuccess(entryId: number) {
+            this.$router.replace({
+                path: '/entry/' + entryId,
+            })
         }
     }
 

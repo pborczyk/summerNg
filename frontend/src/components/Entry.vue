@@ -36,6 +36,7 @@
     import {EntryDto} from "@/data/EntryDto";
     import {api} from '@/api/Api';
     import {environment} from '@/env/DevEnv';
+    import {AxiosPromise} from 'axios';
     @Component({
         components: {AddCommentForm, Comment},
     })
@@ -49,6 +50,17 @@
         public onCommentAdded() {
             api.get<CommentDto[]>(environment.apiUrl + 'entry/comment?entryId='+ this.entry.id)
                 .then((response) => this.entry.comments = response.data);
+        }
+
+        private mounted() {
+            if (this.entry === undefined) {
+                this.getEntry(this.$route.params.entryId as unknown as number)
+                    .then((response) => this.entry = response.data);
+            }
+        }
+
+        private getEntry(entryId: number) : AxiosPromise<EntryDto> {
+            return api.get<EntryDto>(environment.apiUrl + 'entry?entryId=' + entryId);
         }
     }
 

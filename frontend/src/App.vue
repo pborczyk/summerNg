@@ -56,6 +56,7 @@
         {path: '/', component: Entries},
         {path: '/entries/:mode', component: Entries},
         {path: '/register', component: RegisterForm},
+        {path: '/entry/:entryId', component: Entry, props: true},
     ];
 
     const router = new VueRouter({

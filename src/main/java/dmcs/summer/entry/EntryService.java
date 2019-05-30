@@ -79,4 +79,8 @@ public class EntryService {
                 .map(Comment::asDto)
                 .collect(Collectors.toList());
     }
+
+    public EntryDto getById(Long entryId) {
+        return entryRepository.findById(entryId).map(Entry::asDto).orElseThrow();
+    }
 }
