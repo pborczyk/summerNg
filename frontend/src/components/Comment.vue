@@ -1,13 +1,14 @@
 <template>
-    <div class="comment">
+    <div class="comment-box">
         <b-media>
-            <b-img slot="aside" blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
+            <b-img slot="aside" blank blank-color="#ccc" width="32" alt="placeholder"></b-img>
 
             <h5 class="mt-0"><b-link :to="{ path: '/profile/' + comment.author, }">{{ comment.author }}</b-link></h5>
-            <p class="mb-0">
+            <p class="mb-0 comment-content">
                 {{ comment.content }}
             </p>
         </b-media>
+        <hr/>
     </div>
 </template>
 
@@ -24,7 +25,11 @@
 </script>
 
 <style scoped>
-    .comment {
+    .comment-box {
         margin-top: 10px;
+    }
+
+    .comment-content {
+        font-size: 1rem;
     }
 </style>

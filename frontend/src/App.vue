@@ -1,24 +1,26 @@
 <template>
     <div>
-        <navbar @alert-event="alertEvent"></navbar>
-        <b-alert
-                :show="dismissCountDown"
-                dismissible
-                variant="warning"
-                @dismissed="dismissCountDown=0"
-                @dismiss-count-down="countDownChanged">
-            <p>{{ alertMessage }}
-            </p>
-            <b-progress
-                    :variant="alertVariant"
-                    :max="dismissSecs"
-                    :value="dismissCountDown"
-                    height="4px">
+        <b-container class="app-box">
+            <navbar @alert-event="alertEvent"></navbar>
+            <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    variant="warning"
+                    @dismissed="dismissCountDown=0"
+                    @dismiss-count-down="countDownChanged">
+                <p>{{ alertMessage }}
+                </p>
+                <b-progress
+                        :variant="alertVariant"
+                        :max="dismissSecs"
+                        :value="dismissCountDown"
+                        height="4px">
 
-            </b-progress>
-        </b-alert>
-        <b-container>
-            <router-view @alert-event="alertEvent"></router-view>
+                </b-progress>
+            </b-alert>
+            <b-container>
+                <router-view @alert-event="alertEvent"></router-view>
+            </b-container>
         </b-container>
     </div>
 </template>
@@ -101,5 +103,7 @@
 </script>
 
 <style>
-
+    .app-box {
+        width: 60%;
+    }
 </style>

@@ -1,7 +1,17 @@
 <template>
     <div>
         <b-container>
-            <img v-bind:src="getAvatarUrl" alt="Profile avatar" class="img-thumbnail">
+            <b-container>
+                <b-row>
+                    <b-col cols="1">
+                        <b-img blank blank-color="#ccc" width="128" v-bind:src="getAvatarUrl" alt="Profile avatar"
+                               class="img-thumbnail"></b-img>
+                    </b-col>
+                    <b-col>
+                        {{this.username}}
+                    </b-col>
+                </b-row>
+            </b-container>
 
             <entries v-bind:username="this.username"></entries>
         </b-container>
