@@ -72,4 +72,11 @@ public class EntryService {
         commentRepository.save(comment);
         entryRepository.save(entry);
     }
+
+    public List<CommentDto> getEntriesComments(Long entryId) {
+        return commentRepository.getAllByEntry_IdOrderByTimeStampAsc(entryId)
+                .stream()
+                .map(Comment::asDto)
+                .collect(Collectors.toList());
+    }
 }

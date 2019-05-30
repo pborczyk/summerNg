@@ -15,7 +15,7 @@
                         data-vv-name="comment"
                         :state="validateState('comment')"
                         aria-describedby="comment-feedback"
-                        v-validate="{ required: true, alpha: true, min: 2 }">
+                        v-validate="{ required: true, min: 2 }">
                 </b-form-textarea>
                 <b-form-invalid-feedback id="comment-feedback">
                     Komentarz nie może zostać pusty.
@@ -34,12 +34,12 @@
     import {store} from '@/store/store';
     import {mixins} from 'vue-class-component';
     import ValidationMixin from '@/components/util/ValidationMixin.vue';
+    import {environment} from '@/env/DevEnv';
 
     @Component
     export default class AddCommentForm extends mixins(ValidationMixin) {
         public content = '';
 
-        @Prop() private username!: string;
         @Prop() private entryId!: number;
 
         private textAreaRows: number = 2;
@@ -58,7 +58,8 @@
                 author: store.state.loggedInUsername,
                 content: this.content,
             };
-            // api.post(en , request);
+            api.post(environment.apiUrl + 'entry/comment/' , request)
+                .then(() => this.$emit('comment-added'));
         }
     }
 </script>

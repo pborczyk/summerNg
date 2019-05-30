@@ -14,7 +14,7 @@
                         data-vv-name="username"
                         :state="validateState('username')"
                         aria-describedby="login-feedback"
-                        v-validate="{ required: true, alpha: true, min: 6, max:30 }">
+                        v-validate="{ required: true, min: 6, max:30 }">
                 </b-form-input>
 
                 <b-form-invalid-feedback id="login-feedback">
@@ -35,7 +35,7 @@
                         data-vv-name="password"
                         :state="validateState('password')"
                         aria-describedby="password-feedback"
-                        v-validate="{ required: true, alpha: true, min: 6, max:30 }">
+                        v-validate="{ required: true, min: 6, max:30 }">
                 </b-form-input>
 
                 <b-form-invalid-feedback id="password-feedback">

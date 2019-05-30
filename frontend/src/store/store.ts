@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        isLoggedIn: false,
+        isLoggedIn: !!sessionStorage.getItem('auth_token'),
         loggedInUsername: '',
     },
     mutations: {

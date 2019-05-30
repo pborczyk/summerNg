@@ -1,10 +1,8 @@
 <template>
-    <div>
+    <div class="entry">
         <new-entry-form v-if="isNewEntryFormVisible"></new-entry-form>
         <entry v-for="entry in entries"
-               v-bind:username="entry.author"
-               v-bind:content="entry.content"
-               v-bind:upvotes="entry.upvotes">
+               v-bind:entry="entry">
         </entry>
     </div>
 </template>
@@ -48,5 +46,7 @@
 </script>
 
 <style scoped>
-
+    .entry {
+        margin-top: 10px;
+    }
 </style>

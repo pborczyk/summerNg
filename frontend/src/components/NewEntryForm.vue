@@ -4,6 +4,7 @@
             <b-form-group>
                 <b-textarea
                         id="textarea"
+                        class="entry-form"
                         v-model="form.content"
                         placeholder="Wpisz coś..."
                         v-bind:rows="textAreaRows"
@@ -11,11 +12,10 @@
                         @blur="onTextAreaBlur"
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
-                        @input="onContentInput"
                         data-vv-name="entry"
                         :state="validateState('entry')"
                         aria-describedby="entry-feedback"
-                        v-validate="{ required: true, alpha: true, min: 2 }">
+                        v-validate="{ required: true, min: 2 }">
                 </b-textarea>
                 <b-form-invalid-feedback id="entry-feedback">
                     Wpis nie może zostać pusty.
@@ -65,5 +65,7 @@
 </script>
 
 <style scoped>
-
+    .entry-form {
+        margin-top: 10px;
+    }
 </style>

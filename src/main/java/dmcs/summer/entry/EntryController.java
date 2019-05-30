@@ -37,8 +37,13 @@ class EntryController {
         entryService.incrementEntry(entryId);
     }
 
-    @PostMapping("/entry/{id}/comment/")
-    void postComment(@PathVariable(name = "id") Long entryId, CreateCommentDto createCommentDto) {
-        entryService.postComment(entryId, createCommentDto);
+    @PostMapping("/entry/comment/")
+    void postComment(@RequestBody CreateCommentDto createCommentDto) {
+        entryService.postComment(createCommentDto.getEntryId(), createCommentDto);
+    }
+
+    @GetMapping("/entry/comment")
+    List<CommentDto> getEntriesComments(Long entryId) {
+        return entryService.getEntriesComments(entryId);
     }
 }
