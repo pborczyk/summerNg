@@ -8,7 +8,6 @@
                         placeholder="Zacznij pisać..."
                         v-bind:rows="textAreaRows"
                         max-rows="5"
-                        @blur="onTextAreaBlur"
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
                         class="text-area"
@@ -20,7 +19,7 @@
                 <b-form-invalid-feedback id="comment-feedback">
                     Komentarz nie może zostać pusty.
                 </b-form-invalid-feedback>
-                <b-button type="submit" variant="primary" class="submit-button">Wyślij</b-button>
+                <b-button type="submit" variant="primary" class="submit-button" :disabled="errors.any()">Wyślij</b-button>
             </b-form-group>
         </b-form>
     </div>
@@ -60,6 +59,7 @@
             };
             api.post(environment.apiUrl + 'entry/comment/' , request)
                 .then(() => this.$emit('comment-added'));
+            this.content = '';
         }
     }
 </script>

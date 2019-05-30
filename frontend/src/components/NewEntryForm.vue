@@ -9,7 +9,6 @@
                         placeholder="Wpisz coś..."
                         v-bind:rows="textAreaRows"
                         max-rows="6"
-                        @blur="onTextAreaBlur"
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
                         data-vv-name="entry"
@@ -21,7 +20,7 @@
                     Wpis nie może zostać pusty.
                 </b-form-invalid-feedback>
             </b-form-group>
-            <b-button variant="primary" type="submit">Dodaj</b-button>
+            <b-button variant="primary" type="submit" :disabled="errors.any()">Dodaj</b-button>
         </b-form>
     </div>
 </template>
@@ -69,7 +68,8 @@
         private onSuccess(entryId: number) {
             this.$router.replace({
                 path: '/entry/' + entryId,
-            })
+            });
+            this.form.content = '';
         }
     }
 
