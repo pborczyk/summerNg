@@ -3,7 +3,7 @@
         <b-media>
             <b-img slot="aside" blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
 
-            <h5 class="mt-0">{{ comment.author }}</h5>
+            <h5 class="mt-0"><b-link :to="{ path: '/profile/' + comment.author, }">{{ comment.author }}</b-link></h5>
             <p class="mb-0">
                 {{ comment.content }}
             </p>

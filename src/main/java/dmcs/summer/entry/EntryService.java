@@ -83,4 +83,11 @@ public class EntryService {
     public EntryDto getById(Long entryId) {
         return entryRepository.findById(entryId).map(Entry::asDto).orElseThrow();
     }
+
+    public List<EntryDto> getEntriesByUser(String username) {
+        return entryRepository.findByAuthor_UsernameOrderByTimeStampAsc(username)
+                .stream()
+                .map(Entry::asDto)
+                .collect(Collectors.toList());
+    }
 }

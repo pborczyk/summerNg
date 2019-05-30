@@ -51,4 +51,9 @@ class EntryController {
     EntryDto getById(Long entryId) {
         return entryService.getById(entryId);
     }
+
+    @GetMapping("/entries/user")
+    List<EntryDto> getEntriesByUser(String username) {
+        return entryService.getEntriesByUser(username);
+    }
 }

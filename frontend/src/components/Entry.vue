@@ -5,7 +5,7 @@
                 <b-img slot="aside" blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
 
                 <div class="clearfix">
-                    <h5 class="mt-0 float-left">{{ entry.author }}</h5>
+                    <h5 class="mt-0 float-left"><b-link :to="{ path: '/profile/' + entry.author, }">{{ entry.author }}</b-link></h5>
                     <div class="float-right">{{ entry.upvotes }}</div>
                 </div>
                 <p>

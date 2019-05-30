@@ -44,6 +44,7 @@
     import LoginDropdown from './components/LoginDropdown.vue';
     import AddCommentForm from './components/AddCommentForm.vue';
     import VeeValidate from 'vee-validate';
+    import Profile from '@/components/Profile.vue';
 
     Vue.use(VeeValidate, {
         inject: true,
@@ -57,6 +58,7 @@
         {path: '/entries/:mode', component: Entries},
         {path: '/register', component: RegisterForm},
         {path: '/entry/:entryId', component: Entry, props: true},
+        {path: '/profile/:username', component: Profile, props: true}
     ];
 
     const router = new VueRouter({
@@ -73,6 +75,7 @@
             Comment,
             LoginDropdown,
             AddCommentForm,
+            Profile,
         },
         router,
 
