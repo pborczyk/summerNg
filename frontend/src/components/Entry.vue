@@ -12,7 +12,7 @@
                     {{ entry.content }}
                 </p>
 
-                <youtube-embed v-bind:videoId="entry.embedContent"></youtube-embed>
+                <youtube-embed v-if="entry.embedContent != ''" v-bind:videoId="entry.embedContent"></youtube-embed>
 
                 <comment v-for="comment in entry.comments"
                          v-bind:comment="comment">

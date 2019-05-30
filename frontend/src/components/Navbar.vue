@@ -14,7 +14,6 @@
                 <b-navbar-nav class="ml-auto" v-if="isLoginDropdownVisible">
                     <login-dropdown></login-dropdown>
                 </b-navbar-nav>
-                <b-nav
             </b-collapse>
         </b-navbar>
     </div>
