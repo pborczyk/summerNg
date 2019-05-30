@@ -6,15 +6,13 @@
                         id="textarea"
                         class="entry-form"
                         v-model="form.content"
-                        placeholder="Wpisz coś..."
+                        placeholder="Wpis musi mieć minimum 2 znaki."
                         v-bind:rows="textAreaRows"
                         max-rows="6"
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
                         data-vv-name="entry"
-                        :state="validateState('entry')"
-                        aria-describedby="entry-feedback"
-                        v-validate="{ required: true, min: 2 }">
+                        v-validate.initial="{ required: true, min: 2 }">
                 </b-textarea>
                 <b-form-invalid-feedback id="entry-feedback">
                     Wpis nie może zostać pusty.

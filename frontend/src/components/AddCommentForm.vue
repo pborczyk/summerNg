@@ -5,16 +5,14 @@
                 <b-form-textarea
                         id="comment-input"
                         v-model="content"
-                        placeholder="Zacznij pisać..."
+                        placeholder="Komentarz musi mieć minimum 2 znaki."
                         v-bind:rows="textAreaRows"
                         max-rows="5"
                         @click="onTextAreaFocus"
                         @focus="onTextAreaFocus"
                         class="text-area"
                         data-vv-name="comment"
-                        :state="validateState('comment')"
-                        aria-describedby="comment-feedback"
-                        v-validate="{ required: true, min: 2 }">
+                        v-validate.initial="{ required: true, min: 2 }">
                 </b-form-textarea>
                 <b-form-invalid-feedback id="comment-feedback">
                     Komentarz nie może zostać pusty.
