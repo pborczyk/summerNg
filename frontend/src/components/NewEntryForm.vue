@@ -1,10 +1,9 @@
 <template>
-    <div>
+    <div class="entry-form">
         <b-form @submit="onSubmit">
             <b-form-group>
                 <b-textarea
                         id="textarea"
-                        class="entry-form"
                         v-model="form.content"
                         placeholder="Wpis musi mieć minimum 2 znaki."
                         v-bind:rows="textAreaRows"
@@ -18,7 +17,14 @@
                     Wpis nie może zostać pusty.
                 </b-form-invalid-feedback>
             </b-form-group>
-            <b-button variant="primary" type="submit" :disabled="errors.any()">Dodaj</b-button>
+            <b-row>
+                <b-col cols="1">
+                <b-button variant="primary" type="submit" :disabled="errors.any()">Dodaj</b-button>
+                </b-col>
+                <b-col>
+                <b-input v-model="form.embedContent"></b-input>
+                </b-col>
+            </b-row>
         </b-form>
     </div>
 </template>
@@ -38,8 +44,10 @@
     @Component
     export default class NewEntryForm extends mixins(ValidationMixin) {
         public form: CreateEntryRequestDto = {
+            embedContent: '',
+            embedContentType: 'YOUTUBE',
             content: '',
-            author: '',
+            author: ''
         };
 
         private textAreaRows: number = 2;
@@ -55,6 +63,7 @@
 
         public onSubmit() {
             this.form.author = store.state.loggedInUsername;
+            this.form.embedContent = this.form.embedContent.replace('https://www.youtube.com/watch?v=', '');
             api.post<number>(environment.apiUrl + 'entry/', this.form)
                 .then((respone) => {
                     console.log('New entry id: ' + respone.data);
@@ -76,5 +85,6 @@
 <style scoped>
     .entry-form {
         margin-top: 10px;
+        margin-bottom: 10px;
     }
 </style>

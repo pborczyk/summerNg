@@ -7,5 +7,7 @@ export interface EntryDto {
     hashTags: string[];
     upvotes: number;
     timeStamp: Date;
+    embedContentType: string;
+    embedContent: string;
     comments: CommentDto[];
 }

@@ -31,6 +31,8 @@ public class EntryService {
                 )
                 .content(request.getContent())
                 .upvotes(0)
+                .embedContent(request.getEmbedContent())
+                .embedContentType(request.getEmbedContentType())
                 .build();
         Entry savedEntry = entryRepository.save(entry);
         return savedEntry.getId();

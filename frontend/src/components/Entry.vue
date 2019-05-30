@@ -12,6 +12,8 @@
                     {{ entry.content }}
                 </p>
 
+                <youtube-embed v-bind:videoId="entry.embedContent"></youtube-embed>
+
                 <comment v-for="comment in entry.comments"
                          v-bind:comment="comment">
                 </comment>
@@ -38,8 +40,9 @@
     import {api} from '@/api/Api';
     import {environment} from '@/env/DevEnv';
     import {AxiosPromise} from 'axios';
+    import YoutubeEmbed from "@/components/embed/YoutubeEmbed.vue";
     @Component({
-        components: {AddCommentForm, Comment},
+        components: {YoutubeEmbed, AddCommentForm, Comment},
     })
     export default class Entry extends Vue {
         @Prop() private entry!: EntryDto;

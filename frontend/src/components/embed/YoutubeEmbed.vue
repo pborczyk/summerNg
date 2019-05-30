@@ -16,8 +16,7 @@
         @Prop() private autoplay!: boolean;
 
         get embedSrc(): string {
-            return 'http://www.youtube.com/embed/' + this.videoId + '?autoplay=' + this.autoplay ? '1' : '0'
-                + '&origin=' + environment.appUrl;
+            return 'http://www.youtube.com/embed/' + this.videoId;
         }
     }
 

@@ -38,6 +38,11 @@ public class Entry implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entry")
     private List<Comment> comments;
 
+    private String embedContent;
+
+    @Enumerated(EnumType.STRING)
+    private EMBED_CONTENT_TYPE embedContentType;
+
     public EntryDto asDto() {
         EntryDto dto = new EntryDto();
         dto.setAuthor(getAuthor().getUsername());
@@ -47,6 +52,8 @@ public class Entry implements Serializable {
         dto.setContent(getContent());
         dto.setTimeStamp(getTimeStamp());
         dto.setUpvotes(getUpvotes());
+        dto.setEmbedContent(getEmbedContent());
+        dto.setEmbedContentType(getEmbedContentType());
         return dto;
     }
 }
