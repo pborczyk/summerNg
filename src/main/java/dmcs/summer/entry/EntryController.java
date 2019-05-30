@@ -27,11 +27,6 @@ class EntryController {
         return entryService.getTop();
     }
 
-    @GetMapping("/entries/hot")
-    List<EntryDto> getHot(){
-        return entryService.getHot();
-    }
-
     @PutMapping
     void incrementUpvotes(@RequestBody Long entryId) {
         entryService.incrementEntry(entryId);

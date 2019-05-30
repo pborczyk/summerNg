@@ -40,16 +40,6 @@ public class EntryService {
         return entryRepository.findByOrderByTimeStampDesc().stream().map(Entry::asDto).collect(Collectors.toList());
     }
 
-    public List<EntryDto> getHot() {
-        PathBuilder<Entry> entryPathBuilder = new PathBuilder<>(Entry.class, "entry");
-        OrderSpecifier<Long> divide = entryPathBuilder.getNumber("upvotes", Long.class)
-                .divide(entryPathBuilder.getTime("timestamp", Date.class)
-                        .castToNum(Long.class))
-                .desc();
-        QSort orders = new QSort(divide);
-        return entryRepository.findAll(orders).stream().map(Entry::asDto).collect(Collectors.toList());
-    }
-
     public List<EntryDto> getTop() {
         return entryRepository.findByOrderByUpvotesDesc().stream().map(Entry::asDto).collect(Collectors.toList());
     }

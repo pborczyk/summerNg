@@ -38,7 +38,6 @@
                 const mode = this.$route.params.mode;
                 switch (mode) {
                     case 'newest':
-                    case 'hot':
                     case 'top':
                         this.rankingModeHandler(mode);
                         break;

@@ -8,7 +8,6 @@
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
                     <b-nav-item :to="{ path: '/entries/newest' }">Nowe</b-nav-item>
-                    <b-nav-item :to="{ path: '/entries/hot' }">Gorące</b-nav-item>
                     <b-nav-item :to="{ path: '/entries/top' }">Najlepsze</b-nav-item>
                 </b-navbar-nav>
 
