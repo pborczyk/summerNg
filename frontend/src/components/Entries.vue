@@ -34,17 +34,18 @@
         }
 
         private mounted() {
-            if (this.$route.params.mode != null) {
-                const mode = this.$route.params.mode;
-                switch (mode) {
-                    case 'newest':
-                    case 'top':
-                        this.rankingModeHandler(mode);
-                        break;
-                }
-            }
             if (this.username != null) {
                 this.userModeHandler();
+            }
+            let mode = this.$route.params.mode;
+            if (this.$route.params.mode == null) {
+                mode = "newest";
+            }
+            switch (mode) {
+                case "newest":
+                case "top":
+                    this.rankingModeHandler(mode);
+                    break;
             }
         }
 
