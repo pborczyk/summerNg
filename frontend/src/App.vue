@@ -47,6 +47,8 @@
     import AddCommentForm from './components/AddCommentForm.vue';
     import VeeValidate from 'vee-validate';
     import Profile from '@/components/Profile.vue';
+    import BasicAuthInterceptor from '@/api/BasicAuthInterceptor.vue';
+    import {mixins} from 'vue-class-component';
 
     Vue.use(VeeValidate, {
         inject: true,
@@ -82,7 +84,7 @@
         router,
 
     })
-    export default class App extends Vue {
+    export default class App extends mixins(BasicAuthInterceptor) {
 
         public alertMessage = '';
         public alertVariant = '';
@@ -97,6 +99,10 @@
 
         private countDownChanged(dismissCountDown: number) {
             this.dismissCountDown = dismissCountDown;
+        }
+
+        private mounted() {
+            this.registerInterceptor();
         }
     }
 
