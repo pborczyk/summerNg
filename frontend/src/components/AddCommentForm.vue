@@ -51,11 +51,10 @@
 
         public onSubmit() {
             const request: CreateCommentDto = {
-                entryId: this.entryId,
                 author: store.state.loggedInUsername,
                 content: this.content,
             };
-            api.post(environment.apiUrl + 'entry/comment/' , request)
+            api.post(environment.apiUrl + 'entries/' + this.entryId + '/comment/' , request)
                 .then(() => this.$emit('comment-added'));
             this.content = '';
         }

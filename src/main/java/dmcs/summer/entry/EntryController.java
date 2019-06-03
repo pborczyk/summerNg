@@ -12,43 +12,45 @@ class EntryController {
 
     private final EntryService entryService;
 
-    @PostMapping("/entry")
+    @PostMapping("/entries")
     long createEntry(@RequestBody CreateEntryRequest request) {
         return entryService.createEntry(request);
     }
 
-    @GetMapping("/entries/newest")
-    List<EntryDto> getNewest(){
+    @GetMapping("/entries")
+    List<EntryDto> getNewest(@RequestParam(name = "mode") String mode) {
+        switch (mode) {
+            case "top":
+                return entryService.getTop();
+            case "newest":
+                return entryService.getNewest();
+        }
         return entryService.getNewest();
     }
 
-    @GetMapping("/entries/top")
-    List<EntryDto> getTop(){
-        return entryService.getTop();
-    }
-
-    @PutMapping
+    @PutMapping("/entries/{id}/upvote")
     void incrementUpvotes(@RequestBody Long entryId) {
         entryService.incrementEntry(entryId);
     }
 
-    @PostMapping("/entry/comment/")
-    void postComment(@RequestBody CreateCommentDto createCommentDto) {
-        entryService.postComment(createCommentDto.getEntryId(), createCommentDto);
+    @PostMapping("/entries/{id}/comments")
+    void postComment(@PathVariable(name = "id") Long entryId,
+                     @RequestBody CreateCommentDto createCommentDto) {
+        entryService.postComment(entryId, createCommentDto);
     }
 
-    @GetMapping("/entry/comment")
-    List<CommentDto> getEntriesComments(Long entryId) {
+    @GetMapping("/entries/{id}/comments")
+    List<CommentDto> getEntriesComments(@PathVariable(name = "id") Long entryId) {
         return entryService.getEntriesComments(entryId);
     }
 
-    @GetMapping("/entry")
-    EntryDto getById(Long entryId) {
+    @GetMapping("/entries/{id}")
+    EntryDto getById(@PathVariable(name = "id") Long entryId) {
         return entryService.getById(entryId);
     }
 
-    @GetMapping("/entries/user")
-    List<EntryDto> getEntriesByUser(String username) {
+    @GetMapping("/users/{username}/entries")
+    List<EntryDto> getEntriesByUser(@PathVariable(name = "username") String username) {
         return entryService.getEntriesByUser(username);
     }
 }

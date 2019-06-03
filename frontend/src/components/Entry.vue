@@ -52,7 +52,7 @@
         }
 
         public onCommentAdded() {
-            api.get<CommentDto[]>(environment.apiUrl + 'entry/comment?entryId='+ this.entry.id)
+            api.get<CommentDto[]>(environment.apiUrl + 'entries/' + this.entry.id + '/comments')
                 .then((response) => this.entry.comments = response.data);
         }
 
@@ -64,7 +64,7 @@
         }
 
         private getEntry(entryId: number) : AxiosPromise<EntryDto> {
-            return api.get<EntryDto>(environment.apiUrl + 'entry?entryId=' + entryId);
+            return api.get<EntryDto>(environment.apiUrl + 'entries/' + entryId);
         }
     }
 

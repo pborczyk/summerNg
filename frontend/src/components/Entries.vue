@@ -39,18 +39,18 @@
             }
             let mode = this.$route.params.mode;
             if (this.$route.params.mode == null) {
-                mode = "newest";
+                mode = 'newest';
             }
             switch (mode) {
-                case "newest":
-                case "top":
+                case 'newest':
+                case 'top':
                     this.rankingModeHandler(mode);
                     break;
             }
         }
 
         private rankingModeHandler(mode: string) {
-            const url = environment.apiUrl + "entries/" + mode;
+            const url = environment.apiUrl + 'entries/?mode=' + mode;
             api.get<EntryDto[]>(url)
                 .then((response) => {
                     console.log(response.data);
@@ -60,7 +60,7 @@
         }
 
         private userModeHandler() {
-            const url = environment.apiUrl + "entries/user?username=" + this.username;
+            const url = environment.apiUrl + 'users/' + this.username +'/entries';
             api.get<EntryDto[]>(url)
                 .then((response) => {
                     console.log(response.data);
