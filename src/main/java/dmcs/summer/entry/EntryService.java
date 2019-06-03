@@ -88,6 +88,6 @@ public class EntryService {
     }
 
     public boolean isAuthorsEntry(Long entryId, String name) {
-        return entryRepository.existsByAuthorEqualsAndIdEquals(name, entryId);
+        return entryRepository.existsByAuthor_UsernameAndId(name, entryId);
     }
 }
