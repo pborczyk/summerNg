@@ -11,4 +11,5 @@ interface EntryRepository extends JpaRepository<Entry, Long>, QuerydslPredicateE
     List<Entry> findByOrderByUpvotesDesc();
     Optional<Entry> findById(long id);
     List<Entry> findByAuthor_UsernameOrderByTimeStampAsc(String username);
+    boolean existsByAuthorEqualsAndIdEquals(String author, Long entryId);
 }

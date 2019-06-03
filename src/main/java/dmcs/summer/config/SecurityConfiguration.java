@@ -1,5 +1,6 @@
 package dmcs.summer.config;
 
+import dmcs.summer.user.Privilege;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,6 +25,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .antMatcher("/api/**").authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/entries/").hasAuthority(Privilege.ADD_ENTRY.name())
+                .antMatchers(HttpMethod.PUT, "/api/entries/*/upvote").hasAuthority(Privilege.RANK.name())
+                .antMatchers(HttpMethod.POST, "/api/entries/*/comments").hasAuthority(Privilege.COMMENT.name())
                 .antMatchers(HttpMethod.POST, "/api/user/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/entries/**").permitAll()
                 .anyRequest().fullyAuthenticated();

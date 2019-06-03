@@ -82,4 +82,12 @@ public class EntryService {
                 .map(Entry::asDto)
                 .collect(Collectors.toList());
     }
+
+    public void deleteById(Long entryId) {
+        entryRepository.deleteById(entryId);
+    }
+
+    public boolean isAuthorsEntry(Long entryId, String name) {
+        return entryRepository.existsByAuthorEqualsAndIdEquals(name, entryId);
+    }
 }
