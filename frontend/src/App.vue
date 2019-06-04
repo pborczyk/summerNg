@@ -109,6 +109,7 @@
 </script>
 
 <style>
+    @import "https://use.fontawesome.com/releases/v5.6.3/css/all.css";
     .app-box {
         width: 60%;
     }

@@ -22,9 +22,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities(Collections.emptySet())
+                .authorities(getAuthorities(user))
                 .build();
 
 
+    }
+
+    private String[] getAuthorities(dmcs.summer.user.User user) {
+        return user.getRoles()
+                .stream()
+                .flatMap(role -> role.getPrivileges().stream())
+                .map(Enum::name)
+                .toArray(String[]::new);
     }
 }

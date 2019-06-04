@@ -6,7 +6,7 @@
 
                 <div class="clearfix">
                     <h5 class="mt-0 float-left"><b-link :to="{ path: '/profile/' + entry.author, }">{{ entry.author }}</b-link></h5>
-                    <div class="float-right">{{ entry.upvotes }}</div>
+                    <div class="upvote-box">{{ entry.upvotes }}<b-button variant="light" class="upvote-button" :disabled="!isUserLoggedIn" @click="onUpvoteClicked"><span class="fas fa-plus icon-size"></span></b-button></div>
                 </div>
                 <p>
                     {{ entry.content }}
@@ -20,7 +20,7 @@
 
                 <add-comment-form
                         @comment-added="onCommentAdded"
-                        v-if="isNewCommentFormVisible"
+                        v-if="isUserLoggedIn"
                         v-bind:entry-id="entry.id">
 
                 </add-comment-form>
@@ -47,13 +47,18 @@
     export default class Entry extends Vue {
         @Prop() private entry!: EntryDto;
 
-        private get isNewCommentFormVisible(): boolean {
+        private get isUserLoggedIn(): boolean {
             return store.state.isLoggedIn;
         }
 
         public onCommentAdded() {
             api.get<CommentDto[]>(environment.apiUrl + 'entries/' + this.entry.id + '/comments')
                 .then((response) => this.entry.comments = response.data);
+        }
+
+        public onUpvoteClicked() {
+            api.put<number>(environment.apiUrl + 'entries/' + this.entry.id + '/upvote')
+                .then((currentUpvotes) => this.entry.upvotes = currentUpvotes.data);
         }
 
         private mounted() {
@@ -71,5 +76,16 @@
 </script>
 
 <style scoped>
+    .upvote-box {
+        float: right;
+        text-align: center;
+    }
 
+    .upvote-button {
+        font-size: 0.5rem;
+    }
+
+    .icon-size {
+        font-size: 0.75rem;
+    }
 </style>

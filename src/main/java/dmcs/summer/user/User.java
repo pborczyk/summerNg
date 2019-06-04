@@ -29,6 +29,10 @@ public class User implements Serializable {
     private List<Entry> entries;
 
     @Singular
+    @ManyToMany
+    private List<Role> roles;
+
+    @Singular
     @ElementCollection
     private Set<Long> upvotedEntries;
 

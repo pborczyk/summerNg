@@ -46,10 +46,11 @@ public class EntryService {
         return entryRepository.findByOrderByUpvotesDesc().stream().map(Entry::asDto).collect(Collectors.toList());
     }
 
-    public void incrementEntry(Long entryId) {
+    public long incrementEntryAndReturnUpvotes(Long entryId) {
         Entry entry = entryRepository.findById(entryId).orElseThrow(EntryDoesNotExistException::new);
         entry.setUpvotes(entry.getUpvotes() + 1);
         entryRepository.save(entry);
+        return entry.getUpvotes();
     }
 
     public void postComment(Long entryId, CreateCommentDto createCommentDto) {
