@@ -8,15 +8,20 @@ import com.querydsl.core.types.dsl.PathBuilder;
 import dmcs.summer.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.querydsl.QSort;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class EntryService {
 
@@ -39,11 +44,11 @@ public class EntryService {
     }
 
     public List<EntryDto> getNewest() {
-        return entryRepository.findByOrderByTimeStampDesc().stream().map(Entry::asDto).collect(Collectors.toList());
+        return entryRepository.findByOrderByTimeStampDesc().stream().map(this::asDto).collect(Collectors.toList());
     }
 
     public List<EntryDto> getTop() {
-        return entryRepository.findByOrderByUpvotesDesc().stream().map(Entry::asDto).collect(Collectors.toList());
+        return entryRepository.findByOrderByUpvotesDesc().stream().map(this::asDto).collect(Collectors.toList());
     }
 
     public long incrementEntryAndReturnUpvotes(Long entryId) {
@@ -74,13 +79,13 @@ public class EntryService {
     }
 
     public EntryDto getById(Long entryId) {
-        return entryRepository.findById(entryId).map(Entry::asDto).orElseThrow();
+        return entryRepository.findById(entryId).map(this::asDto).orElseThrow();
     }
 
     public List<EntryDto> getEntriesByUser(String username) {
         return entryRepository.findByAuthor_UsernameOrderByTimeStampAsc(username)
                 .stream()
-                .map(Entry::asDto)
+                .map(this::asDto)
                 .collect(Collectors.toList());
     }
 
@@ -90,5 +95,28 @@ public class EntryService {
 
     public boolean isAuthorsEntry(Long entryId, String name) {
         return entryRepository.existsByAuthor_UsernameAndId(name, entryId);
+    }
+
+    public EntryDto asDto(Entry entry) {
+        EntryDto dto = new EntryDto();
+        dto.setAuthor(entry.getAuthor().getUsername());
+        dto.setComments(entry.getComments().stream().map(Comment::asDto).collect(Collectors.toList()));
+        dto.setHashTags(entry.getHashTags());
+        dto.setId(entry.getId());
+        dto.setContent(entry.getContent());
+        dto.setTimeStamp(entry.getTimeStamp());
+        dto.setUpvotes(entry.getUpvotes());
+        dto.setEmbedContent(entry.getEmbedContent());
+        dto.setEmbedContentType(entry.getEmbedContentType());
+        dto.setCanUpvote(canUpvote(entry));
+        return dto;
+    }
+
+    private boolean canUpvote(Entry entry) {
+        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+            return !userRepository.existsByUpvotedEntriesContainsAndUsernameEquals(entry.getId(),
+                    SecurityContextHolder.getContext().getAuthentication().getName());
+        }
+        return false;
     }
 }

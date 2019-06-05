@@ -64,7 +64,7 @@
         public onSubmit() {
             this.form.author = store.state.loggedInUsername;
             this.form.embedContent = this.form.embedContent.replace('https://www.youtube.com/watch?v=', '');
-            api.post<number>(environment.apiUrl + 'entry/', this.form)
+            api.post<number>(environment.apiUrl + 'entries/', this.form)
                 .then((respone) => {
                     console.log('New entry id: ' + respone.data);
                     this.onSuccess(respone.data);

@@ -43,17 +43,5 @@ public class Entry implements Serializable {
     @Enumerated(EnumType.STRING)
     private EMBED_CONTENT_TYPE embedContentType;
 
-    public EntryDto asDto() {
-        EntryDto dto = new EntryDto();
-        dto.setAuthor(getAuthor().getUsername());
-        dto.setComments(getComments().stream().map(Comment::asDto).collect(Collectors.toList()));
-        dto.setHashTags(getHashTags());
-        dto.setId(getId());
-        dto.setContent(getContent());
-        dto.setTimeStamp(getTimeStamp());
-        dto.setUpvotes(getUpvotes());
-        dto.setEmbedContent(getEmbedContent());
-        dto.setEmbedContentType(getEmbedContentType());
-        return dto;
-    }
+
 }

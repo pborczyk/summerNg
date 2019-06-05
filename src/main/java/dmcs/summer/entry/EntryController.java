@@ -35,7 +35,7 @@ class EntryController {
     }
 
     @PutMapping("/entries/{id}/upvote")
-    Long incrementUpvotes(@RequestBody Long entryId) {
+    Long incrementUpvotes(@PathVariable(name = "id") Long entryId) {
         return entryService.incrementEntryAndReturnUpvotes(entryId);
     }
 

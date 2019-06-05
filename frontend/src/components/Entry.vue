@@ -6,7 +6,7 @@
 
                 <div class="clearfix">
                     <h5 class="mt-0 float-left"><b-link :to="{ path: '/profile/' + entry.author, }">{{ entry.author }}</b-link></h5>
-                    <div class="upvote-box">{{ entry.upvotes }}<b-button variant="light" class="upvote-button" :disabled="!isUserLoggedIn" @click="onUpvoteClicked"><span class="fas fa-plus icon-size"></span></b-button></div>
+                    <div class="upvote-box">{{ entry.upvotes }}<b-button variant="light" class="upvote-button" :disabled="!entry.canUpvote" @click="onUpvoteClicked"><span class="fas fa-plus icon-size"></span></b-button></div>
                 </div>
                 <p>
                     {{ entry.content }}
@@ -58,7 +58,10 @@
 
         public onUpvoteClicked() {
             api.put<number>(environment.apiUrl + 'entries/' + this.entry.id + '/upvote')
-                .then((currentUpvotes) => this.entry.upvotes = currentUpvotes.data);
+                .then((currentUpvotes) => {
+                    this.entry.upvotes = currentUpvotes.data;
+                    this.entry.canUpvote = false;
+                });
         }
 
         private mounted() {

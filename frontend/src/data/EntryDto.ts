@@ -10,4 +10,5 @@ export interface EntryDto {
     embedContentType: string;
     embedContent: string;
     comments: CommentDto[];
+    canUpvote: boolean;
 }

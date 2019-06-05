@@ -27,11 +27,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private PasswordEncoder passwordEncoder;
 
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -41,6 +36,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         }
 
         if(userRepository.findAll().iterator().hasNext()) {
+            isAlreadySetup = true;
             return;
         }
 

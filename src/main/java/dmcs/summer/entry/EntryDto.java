@@ -22,4 +22,5 @@ public class EntryDto {
 
     private EMBED_CONTENT_TYPE embedContentType;
     private List<CommentDto> comments;
+    private boolean canUpvote;
 }
