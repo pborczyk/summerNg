@@ -2,7 +2,8 @@
     <div class="entry">
         <new-entry-form v-if="isNewEntryFormVisible"></new-entry-form>
         <entry v-for="entry in entries"
-               v-bind:entry="entry">
+               v-bind:entry="entry"
+                @entry-deleted="onEntryDeleted($event)">
         </entry>
     </div>
 </template>
@@ -68,6 +69,14 @@
                 })
                 .catch((error) => console.log(error));
 
+        }
+
+        public onEntryDeleted(entryId: number) {
+            for( var i = 0; i < this.entries.length; i++){
+                if (  this.entries[i].id === entryId) {
+                    this.entries.splice(i, 1);
+                }
+            }
         }
     }
 
