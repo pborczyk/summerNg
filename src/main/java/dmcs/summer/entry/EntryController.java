@@ -29,14 +29,16 @@ class EntryController {
     }
 
     @GetMapping("/entries")
-    List<EntryDto> getNewest(@RequestParam(name = "mode") String mode) {
+    GetEntiresResponse getNewest(@RequestParam(name = "mode") String mode,
+                             @RequestParam(name = "page") Integer page,
+                             @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         switch (mode) {
             case "top":
-                return entryService.getTop();
+                return entryService.getTop(page, pageSize);
             case "newest":
-                return entryService.getNewest();
+                return entryService.getNewest(page, pageSize);
         }
-        return entryService.getNewest();
+        return entryService.getNewest(page, pageSize);
     }
 
     @PutMapping("/entries/{id}/upvote")

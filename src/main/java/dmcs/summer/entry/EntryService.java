@@ -1,22 +1,20 @@
 package dmcs.summer.entry;
 
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.*;
 import dmcs.summer.user.QUser;
 import dmcs.summer.user.User;
 import dmcs.summer.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.querydsl.QSort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,12 +40,26 @@ public class EntryService {
         return savedEntry.getId();
     }
 
-    public List<EntryDto> getNewest() {
-        return entryRepository.findByOrderByTimeStampDesc().stream().map(this::asDto).collect(Collectors.toList());
+    public GetEntiresResponse getNewest(Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        Page<Entry> byOrderByTimeStampDesc = entryRepository.findByOrderByTimeStampDesc(pageRequest);
+        return GetEntiresResponse.builder()
+                .pageNumber(byOrderByTimeStampDesc.getNumber())
+                .maxPages(byOrderByTimeStampDesc.getTotalPages())
+                .sizeOfPage(byOrderByTimeStampDesc.getSize())
+                .content(byOrderByTimeStampDesc.getContent().stream().map(this::asDto).collect(Collectors.toList()))
+                .build();
     }
 
-    public List<EntryDto> getTop() {
-        return entryRepository.findByOrderByUpvotesDesc().stream().map(this::asDto).collect(Collectors.toList());
+    public GetEntiresResponse getTop(Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        Page<Entry> byOrderByUpvotesDesc = entryRepository.findByOrderByUpvotesDesc(pageRequest);
+        return GetEntiresResponse.builder()
+                .pageNumber(byOrderByUpvotesDesc.getNumber())
+                .maxPages(byOrderByUpvotesDesc.getTotalPages())
+                .sizeOfPage(byOrderByUpvotesDesc.getSize())
+                .content(byOrderByUpvotesDesc.getContent().stream().map(this::asDto).collect(Collectors.toList()))
+                .build();
     }
 
     public long incrementEntryAndReturnUpvotes(Long entryId) {

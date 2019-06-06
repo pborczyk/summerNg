@@ -5,6 +5,9 @@
                v-bind:entry="entry"
                 @entry-deleted="onEntryDeleted($event)">
         </entry>
+        <div class="overflow-auto">
+            <b-pagination-nav :link-gen="linkGen" :number-of-pages="maxPages" use-router></b-pagination-nav>
+        </div>
     </div>
 </template>
 
@@ -17,6 +20,7 @@
     import {environment} from '@/env/DevEnv';
     import Vue from 'vue';
     import {store} from '@/store/store';
+    import {GetEntriesresponseDto} from "@/data/GetEntriesresponseDto";
 
     @Component({
         components: {
@@ -26,6 +30,7 @@
     })
     export default class Entries extends Vue {
         private entries: EntryDto[] = [];
+        public maxPages: number = 1;
         @Prop() private username!: string;
 
 
@@ -55,11 +60,15 @@
         }
 
         private rankingModeHandler(mode: string) {
-            const url = environment.apiUrl + 'entries/?mode=' + mode;
-            api.get<EntryDto[]>(url)
+            debugger;
+            let pageNum = (this.$route.params.pageNum != null ? this.$route.params.pageNum : "1") as unknown as number;
+            const url = environment.apiUrl + 'entries/?mode=' + mode + '&page='
+            + (pageNum - 1);
+            api.get<GetEntriesresponseDto>(url)
                 .then((response) => {
                     console.log(response.data);
-                    return this.entries = response.data;
+                    this.entries = response.data.content;
+                    this.maxPages = response.data.maxPages;
                 })
                 .catch((error) => console.log(error));
         }
@@ -86,6 +95,10 @@
         @Watch('$route')
         public routeWatch() {
             this.initialize();
+        }
+
+        public linkGen(pageNum: number) {
+            return '/entries/' + this.$route.params.mode + '/page/' + pageNum;
         }
     }
 

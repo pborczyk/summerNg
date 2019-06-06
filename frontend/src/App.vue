@@ -59,7 +59,7 @@
 
     const routes = [
         {path: '/', component: Entries},
-        {path: '/entries/:mode', component: Entries},
+        {path: '/entries/:mode/page/:pageNum', component: Entries},
         {path: '/register', component: RegisterForm},
         {path: '/entry/:entryId', component: Entry, props: true},
         {path: '/profile/:username', component: Profile, props: true}
