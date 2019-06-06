@@ -1,10 +1,9 @@
 package dmcs.summer.entry;
 
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.MathExpressions;
-import com.querydsl.core.types.dsl.NumberExpression;
-import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.core.types.dsl.*;
+import dmcs.summer.user.QUser;
+import dmcs.summer.user.User;
 import dmcs.summer.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.querydsl.QSort;
@@ -55,6 +54,10 @@ public class EntryService {
         Entry entry = entryRepository.findById(entryId).orElseThrow(EntryDoesNotExistException::new);
         entry.setUpvotes(entry.getUpvotes() + 1);
         entryRepository.save(entry);
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(name).orElseThrow();
+        user.getUpvotedEntries().add(entryId);
+        userRepository.save(user);
         return entry.getUpvotes();
     }
 
@@ -114,8 +117,11 @@ public class EntryService {
 
     private boolean canUpvote(Entry entry) {
         if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
-            return !userRepository.existsByUpvotedEntriesContainsAndUsernameEquals(entry.getId(),
-                    SecurityContextHolder.getContext().getAuthentication().getName());
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            BooleanExpression booleanExpression = QUser.user.username.eq(username)
+                    .and(QUser.user.upvotedEntries.contains(entry.getId()));
+            boolean b = !userRepository.exists(booleanExpression);
+            return b;
         }
         return false;
     }
