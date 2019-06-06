@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop} from "vue-property-decorator";
+    import {Component, Prop, Watch} from "vue-property-decorator";
     import {EntryDto} from '@/data/EntryDto';
     import Entry from '@/components/Entry.vue';
     import {api} from '@/api/Api';
@@ -35,6 +35,10 @@
         }
 
         private mounted() {
+          this.initialize();
+        }
+
+        private initialize() {
             if (this.username != null) {
                 this.userModeHandler();
             }
@@ -77,6 +81,11 @@
                     this.entries.splice(i, 1);
                 }
             }
+        }
+
+        @Watch('$route')
+        public routeWatch() {
+            this.initialize();
         }
     }
 
