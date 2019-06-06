@@ -6,7 +6,11 @@
 
                 <div class="clearfix">
                     <h5 class="mt-0 float-left"><b-link :to="{ path: '/profile/' + entry.author, }">{{ entry.author }}</b-link></h5>
-                    <div class="upvote-box">{{ entry.upvotes }}<b-button variant="light" class="upvote-button" :disabled="!entry.canUpvote" @click="onUpvoteClicked"><span class="fas fa-plus icon-size"></span></b-button></div>
+                    <div class="upvote-box">
+                        {{ entry.upvotes }}<b-button variant="light" class="upvote-button" :disabled="!entry.canUpvote" @click="onUpvoteClicked"><span class="fas fa-plus icon-size"></span></b-button>
+                        <b-button variant="danger" v-if="canDeleteEntry" @click="onDeleteClicked"><span class="fas fa-times"></span></b-button>
+                    </div>
+
                 </div>
                 <p>
                     {{ entry.content }}
@@ -41,6 +45,7 @@
     import {environment} from '@/env/DevEnv';
     import {AxiosPromise} from 'axios';
     import YoutubeEmbed from "@/components/embed/YoutubeEmbed.vue";
+
     @Component({
         components: {YoutubeEmbed, AddCommentForm, Comment},
     })
@@ -62,6 +67,22 @@
                     this.entry.upvotes = currentUpvotes.data;
                     this.entry.canUpvote = false;
                 });
+        }
+
+        public onDeleteClicked() {
+            api.delete(environment.apiUrl + 'entries/' + this.entry.id)
+                .then(() => {
+                    this.$emit('entry-deleted', this.entry.id);
+                });
+        }
+
+        public get canDeleteEntry(): boolean {
+            if (store.state.loggedInUserPrivileges.includes('DELETE_ALL_POSTS')) {
+                return true
+            }
+            return !!(store.state.loggedInUserPrivileges.includes("DELETE_OWN_POSTS") &&
+                this.entry.author == store.state.loggedInUsername);
+
         }
 
         private mounted() {

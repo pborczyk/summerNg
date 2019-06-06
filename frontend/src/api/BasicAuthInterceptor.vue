@@ -28,7 +28,7 @@
             });
             console.log('interceptor registered');
             api.get<UserDto>(environment.apiUrl + 'user/')
-                .then((user) => store.commit('logIn', user.data.username))
+                .then((user) => store.commit('logIn', user.data))
                 .catch((error) => {
                     api.interceptors.request.eject(interceptorId);
                     this.$emit('alert-event', 'Błędne dane logowania', 'danger');
