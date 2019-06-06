@@ -23,6 +23,11 @@ class EntryController {
         return entryService.createEntry(request);
     }
 
+    @PutMapping("/entries/{id}")
+    void editEntry(@PathVariable(name = "id") Long entryId, @RequestBody EditEntryRequestDto requestDto) {
+        entryService.editEntry(entryId, requestDto);
+    }
+
     @GetMapping("/entries")
     List<EntryDto> getNewest(@RequestParam(name = "mode") String mode) {
         switch (mode) {

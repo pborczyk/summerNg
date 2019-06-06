@@ -119,4 +119,11 @@ public class EntryService {
         }
         return false;
     }
+
+    public void editEntry(Long entryId, EditEntryRequestDto requestDto) {
+        Entry entry = entryRepository.findById(entryId).orElseThrow();
+        entry.setContent(requestDto.getContent());
+        entry.setEmbedContent(requestDto.getEmbedContent());
+        entryRepository.save(entry);
+    }
 }

@@ -5,5 +5,5 @@ public enum Privilege {
     DELETE_OWN_POSTS,
     DELETE_ALL_POSTS,
     COMMENT,
-    RANK
+    RANK,
 }

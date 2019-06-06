@@ -1,36 +1,50 @@
 <template>
     <div>
-        <b-card>
-            <b-media>
-                <b-img slot="aside" blank blank-color="#ccc" width="32" alt="placeholder"></b-img>
 
-                <div class="clearfix">
-                    <h5 class="mt-0 float-left"><b-link :to="{ path: '/profile/' + entry.author, }">{{ entry.author }}</b-link></h5>
-                    <div class="upvote-box">
-                        {{ entry.upvotes }}<b-button variant="light" class="upvote-button" :disabled="!entry.canUpvote" @click="onUpvoteClicked"><span class="fas fa-plus icon-size"></span></b-button>
-                        <b-button variant="danger" v-if="canDeleteEntry" @click="onDeleteClicked"><span class="fas fa-times"></span></b-button>
+            <b-card>
+                <b-media>
+                    <b-img slot="aside" blank blank-color="#ccc" width="32" alt="placeholder"></b-img>
+
+                    <div class="clearfix">
+                        <h5 class="mt-0 float-left">
+                            <b-link :to="{ path: '/profile/' + entry.author, }">{{ entry.author }}</b-link>
+                        </h5>
+                        <div class="upvote-box">
+                            {{ entry.upvotes }}
+                            <b-button variant="light" class="upvote-button" :disabled="!entry.canUpvote"
+                                      @click="onUpvoteClicked"><span class="fas fa-plus icon-size"></span></b-button>
+                            <b-button variant="secondary" v-if="canEditEntry" @click="onEntryEdited"><span
+                                    class="fas fa-edit"></span></b-button>
+                            <b-button variant="danger" v-if="canDeleteEntry" @click="onDeleteClicked"><span
+                                    class="fas fa-times"></span></b-button>
+                        </div>
+
+                    </div>
+                    <div v-if="!editMode">
+                        <p>
+                            {{ entry.content }}
+                        </p>
                     </div>
 
-                </div>
-                <p>
-                    {{ entry.content }}
-                </p>
+                    <div v-if="editMode">
+                        <edit-entry v-bind:entry="entry"></edit-entry>
+                    </div>
 
-                <youtube-embed v-if="entry.embedContent != ''" v-bind:videoId="entry.embedContent"></youtube-embed>
+                    <youtube-embed v-if="entry.embedContent != ''" v-bind:videoId="entry.embedContent"></youtube-embed>
 
-                <comment v-for="comment in entry.comments"
-                         v-bind:comment="comment">
-                </comment>
+                    <comment v-for="comment in entry.comments"
+                             v-bind:comment="comment">
+                    </comment>
 
-                <add-comment-form
-                        @comment-added="onCommentAdded"
-                        v-if="isUserLoggedIn"
-                        v-bind:entry-id="entry.id">
+                    <add-comment-form
+                            @comment-added="onCommentAdded"
+                            v-if="isUserLoggedIn"
+                            v-bind:entry-id="entry.id">
 
-                </add-comment-form>
-            </b-media>
-        </b-card>
-        <hr/>
+                    </add-comment-form>
+                </b-media>
+            </b-card>
+            <hr/>
     </div>
 </template>
 
@@ -45,12 +59,15 @@
     import {environment} from '@/env/DevEnv';
     import {AxiosPromise} from 'axios';
     import YoutubeEmbed from "@/components/embed/YoutubeEmbed.vue";
+    import EditEntry from '@/components/EditEntry.vue';
 
     @Component({
-        components: {YoutubeEmbed, AddCommentForm, Comment},
+        components: {EditEntry, YoutubeEmbed, AddCommentForm, Comment},
     })
     export default class Entry extends Vue {
         @Prop() private entry!: EntryDto;
+
+        public editMode: boolean = false;
 
         private get isUserLoggedIn(): boolean {
             return store.state.isLoggedIn;
@@ -83,6 +100,14 @@
             return !!(store.state.loggedInUserPrivileges.includes("DELETE_OWN_POSTS") &&
                 this.entry.author == store.state.loggedInUsername);
 
+        }
+
+        public onEntryEdited() {
+            this.editMode = true;
+        }
+
+        public get canEditEntry(): boolean {
+            return this.entry.author == store.state.loggedInUsername;
         }
 
         private mounted() {
