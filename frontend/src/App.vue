@@ -101,7 +101,7 @@
             this.dismissCountDown = dismissCountDown;
         }
 
-        private mounted() {
+        private created() {
             this.registerInterceptor();
         }
     }
