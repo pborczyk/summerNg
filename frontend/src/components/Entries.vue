@@ -98,7 +98,11 @@
         }
 
         public linkGen(pageNum: number) {
-            return '/entries/' + this.$route.params.mode + '/page/' + pageNum;
+            let mode = this.$route.params.mode;
+            if (this.$route.params.mode == null) {
+                mode = 'newest';
+            }
+            return '/entries/' + mode + '/page/' + pageNum;
         }
     }
 
