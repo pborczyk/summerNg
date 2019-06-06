@@ -2,7 +2,16 @@
     <div>
         <b-form @submit="onSubmit">
             <b-textarea v-model="form.content"/>
-            <b-button variant="primary" type="submit">Zapisz</b-button>
+
+
+            <b-row>
+                <b-col cols="1">
+                    <b-button variant="primary" type="submit">Zapisz</b-button>
+                </b-col>
+                <b-col>
+                    <b-button variant="danger" @click="onAbortEdit">Anuluj</b-button>
+                </b-col>
+            </b-row>
         </b-form>
     </div>
 </template>
@@ -35,6 +44,10 @@
                 .then(() => {
                     this.$emit('entry-edited');
                 });
+        }
+
+        public onAbortEdit() {
+            this.$emit('edit-aborted');
         }
 
     }

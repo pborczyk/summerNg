@@ -27,7 +27,10 @@
                     </div>
 
                     <div v-if="editMode">
-                        <edit-entry v-bind:entry="entry"></edit-entry>
+                        <edit-entry
+                                @edit-aborted="onEditAborted"
+                                @entry-edited="onEntryEditComplete"
+                                v-bind:entry="entry"></edit-entry>
                     </div>
 
                     <youtube-embed v-if="entry.embedContent != ''" v-bind:videoId="entry.embedContent"></youtube-embed>
@@ -104,6 +107,15 @@
 
         public onEntryEdited() {
             this.editMode = true;
+        }
+
+        public onEntryEditComplete() {
+            this.editMode = false;
+            this.getEntry(this.entry.id).then((response) => this.entry = response.data);
+        }
+
+        public onEditAborted() {
+            this.editMode = false;
         }
 
         public get canEditEntry(): boolean {
